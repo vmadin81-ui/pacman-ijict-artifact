@@ -1,0 +1,131 @@
+{
+  "scope": "data-only",
+  "csv_count": 25,
+  "files": [
+    {
+      "path": "data/E1/contrasts.csv",
+      "git_blob_sha1": "488f301bd1c5747badb8f816bb3fd8492633aca7",
+      "size": 10929
+    },
+    {
+      "path": "data/E1/descriptive.csv",
+      "git_blob_sha1": "8ac158bd66b480a77b3e3be589316d8680ac3aa2",
+      "size": 9812
+    },
+    {
+      "path": "data/E1/pairs.csv",
+      "git_blob_sha1": "ccf3e68124e4b2a41d0a883ed21b03c25dd27397",
+      "size": 55071
+    },
+    {
+      "path": "data/E2-CI/contrasts.csv",
+      "git_blob_sha1": "34057b02f940d25f9e211a63f5fa61145cf5b412",
+      "size": 4965
+    },
+    {
+      "path": "data/E2-CI/descriptive.csv",
+      "git_blob_sha1": "8ab2ffb265020b307732e57872b4c8f699984c22",
+      "size": 4376
+    },
+    {
+      "path": "data/E2-CI/pairs.csv",
+      "git_blob_sha1": "337ddf1b597058d4f5399c0049ecdd4a8e8eb6d6",
+      "size": 31983
+    },
+    {
+      "path": "data/E2-CI/preparation.csv",
+      "git_blob_sha1": "e12626826afbd8221ffdc740d2d51501ad3164f6",
+      "size": 588
+    },
+    {
+      "path": "data/E2/contrasts.csv",
+      "git_blob_sha1": "a97602a526297e6803756f3b31eba2d57ecd447c",
+      "size": 5062
+    },
+    {
+      "path": "data/E2/descriptive.csv",
+      "git_blob_sha1": "c0bbc90cdbb184fe25f75b48aa5e429221d586b8",
+      "size": 4447
+    },
+    {
+      "path": "data/E2/pairs.csv",
+      "git_blob_sha1": "0e4115bdfc86e282d0d0c09df44e0f4ee6517d65",
+      "size": 32547
+    },
+    {
+      "path": "data/E2/preparation.csv",
+      "git_blob_sha1": "f9b8a03c8b8a2b945967334a462e841f31d114f8",
+      "size": 616
+    },
+    {
+      "path": "data/E3-CI/contrasts.csv",
+      "git_blob_sha1": "ca65b5f541d178733e89a36df5ec512584859c76",
+      "size": 1843
+    },
+    {
+      "path": "data/E3-CI/descriptive.csv",
+      "git_blob_sha1": "9f61e55dd6555343f2fc643edc89bb7258aa7393",
+      "size": 3398
+    },
+    {
+      "path": "data/E3-CI/pairs.csv",
+      "git_blob_sha1": "0e4fdd9f177c9fc406c6352700547a499c95fc8a",
+      "size": 12592
+    },
+    {
+      "path": "data/E3-CI/preparation.csv",
+      "git_blob_sha1": "aff80d2886fe743195fa6afe83a445daa070553c",
+      "size": 629
+    },
+    {
+      "path": "data/E3-CI/visual.csv",
+      "git_blob_sha1": "91d35cabcc8ab3ce7921690e0000737336edd6e2",
+      "size": 395
+    },
+    {
+      "path": "data/E3/contrasts.csv",
+      "git_blob_sha1": "480a9984bb5780b608538c0aaf136f1ef873ff2b",
+      "size": 1882
+    },
+    {
+      "path": "data/E3/descriptive.csv",
+      "git_blob_sha1": "5684c1d1b5400bdfb1ee0d29e57e0f370eef8f7a",
+      "size": 3490
+    },
+    {
+      "path": "data/E3/pairs.csv",
+      "git_blob_sha1": "399f6d4a0ef7b6ae769b1aea50566312408e43ce",
+      "size": 12854
+    },
+    {
+      "path": "data/E3/preparation.csv",
+      "git_blob_sha1": "cb7224cb7f2fb8e5cbd96aac422287de0a8daf56",
+      "size": 665
+    },
+    {
+      "path": "data/E3/visual.csv",
+      "git_blob_sha1": "91d35cabcc8ab3ce7921690e0000737336edd6e2",
+      "size": 395
+    },
+    {
+      "path": "data/E4/versions.csv",
+      "git_blob_sha1": "0826a381246b74357ea3830dd1a360699cdbe3c9",
+      "size": 1883
+    },
+    {
+      "path": "tables/table-1-structural.csv",
+      "git_blob_sha1": "c7a25aad9ffe86e3923228b433ed91a7ce541b81",
+      "size": 425
+    },
+    {
+      "path": "tables/table-2-search.csv",
+      "git_blob_sha1": "041538d1c6bde3c47066c600b5497c8d2b5db2ec",
+      "size": 2226
+    },
+    {
+      "path": "tables/table-3-renderer.csv",
+      "git_blob_sha1": "05fcf1520e8ba3ae8ab45082013fc084a8f0008c",
+      "size": 2052
+    }
+  ]
+}
