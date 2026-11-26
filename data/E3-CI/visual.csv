@@ -1,0 +1,7 @@
+engine,map,frame_pairs,pixel_positions,different_pixels,max_delta,hud_differences,cache_rebuilt,fallback
+chromium,Classic,120,29376000,0,0,0,True,True
+chromium,Labyrinth,120,29376000,0,0,0,True,True
+chromium,Crossroads,120,29376000,0,0,0,True,True
+firefox,Classic,120,29376000,0,0,0,True,True
+firefox,Labyrinth,120,29376000,0,0,0,True,True
+firefox,Crossroads,120,29376000,0,0,0,True,True
