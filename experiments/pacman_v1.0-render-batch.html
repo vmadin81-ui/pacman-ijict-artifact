@@ -1,0 +1,1260 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>JS Game PacMan v. 1.0</title>
+    <style>
+        :root { color-scheme: dark; font-family: system-ui, sans-serif; background: #10141c; color: #f4f5f8; }
+        * { box-sizing: border-box; }
+        body { margin: 0; padding: 24px 16px; }
+        main { max-width: 740px; margin: auto; padding: 20px; background: #171c25; border: 1px solid #30394a; border-radius: 16px; }
+        header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 16px; }
+        h1 { margin: 0; color: #ffdf36; font-size: clamp(20px, 4vw, 32px); letter-spacing: .03em; }
+        h1 small { color: #aab5c6; font-size: .45em; font-weight: 400; }
+        h2 { font-size: 18px; margin: 0; font-variant-numeric: tabular-nums; }
+        #lives { display: flex; gap: 5px; color: #ffdf36; }
+        #lives span { display: block; width: 19px; height: 19px; background: currentColor; border-radius: 50%; clip-path: polygon(0 0,100% 0,100% 30%,50% 50%,100% 70%,100% 100%,0 100%); }
+        .board { position: relative; border: 1px solid #34466d; border-radius: 10px; overflow: hidden; background: #080b11; }
+        canvas { display: block; width: 100%; height: auto; }
+        #overlay { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; background: #080b11c9; pointer-events: none; }
+        #overlay[hidden] { display: none; }
+        #overlay strong { font-size: clamp(22px, 5vw, 40px); color: #ffdf36; }
+        #overlay span { margin-top: 8px; color: #d1d9e7; }
+        #hud, #status { font-size: 13px; color: #b9c4d6; line-height: 1.6; }
+        .controls, .settings { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 12px 0; }
+        button, select, input { font: inherit; border: 1px solid #46536a; background: #202735; color: #f4f5f8; border-radius: 8px; padding: 8px 12px; }
+        button { cursor: pointer; }
+        #start { background: #ffdf36; color: #10141c; border-color: #ffdf36; font-weight: 700; }
+        button:disabled, select:disabled, input:disabled { opacity: .45; cursor: default; }
+        button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px solid #86b5ff; outline-offset: 3px; }
+        label { font-size: 13px; color: #c2ccdc; }
+        #seed { width: 85px; }
+        #volume { width: 110px; padding: 0; accent-color: #ffdf36; }
+        #playerName { width: 150px; max-width: 100%; }
+        .records-scroll { overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        th, td { padding: 8px; text-align: left; border-bottom: 1px solid #30394a; white-space: nowrap; }
+        td:nth-child(2) { max-width: 160px; overflow: hidden; text-overflow: ellipsis; }
+        #storageStatus { font-size: 12px; color: #b9c4d6; }
+        #audioStatus { font-size: 12px; color: #b9c4d6; }
+        @media (max-width: 500px) { main { padding: 12px; } body { padding: 8px; } }
+    </style>
+</head>
+<body>
+<main>
+<header><h1>PAC-MAN <small>v1.0</small></h1><h2 id="idScore">Очки: 0</h2><div id="lives" aria-label="Жизни: 3"></div></header>
+<div class="board"><canvas id="canvas" width="680" height="360" aria-label="Игровой лабиринт"></canvas>
+<div id="overlay" hidden><strong id="overlayTitle"></strong><span id="overlayHint"></span></div></div>
+<p id="hud"></p>
+<p class="controls"><button id="start">Start</button> <button id="pause" disabled>Pause</button> <button id="stop" disabled>Stop</button></p>
+<p class="settings"><label>Имя <input id="playerName" maxlength="24" value="PLAYER"></label></p>
+<p class="settings"><label>Сложность <select id="difficulty"><option value="easy">Лёгкая</option><option value="normal" selected>Средняя</option><option value="hard">Сложная</option><option value="expert">Эксперт</option></select></label> <label>Стратегия <select id="strategy"><option>Random</option><option selected>Greedy</option><option>BFS</option><option>A*</option></select></label> <label>Seed <input id="seed" type="number" value="42" step="1"></label></p>
+<div class="settings"><button id="mute" type="button" aria-pressed="false">Звук: вкл.</button> <label>Громкость <input id="volume" type="range" min="0" max="100" value="35" step="1"></label> <span id="audioStatus" role="status">Звук активируется после Start</span></div>
+<p id="status" role="status">Нажмите Start. Управление — стрелками.</p>
+<section aria-labelledby="recordsTitle">
+<h2 id="recordsTitle">Таблица рекордов</h2>
+<p id="recordsGroup"></p>
+<div class="records-scroll"><table><thead><tr><th>№</th><th>Игрок</th><th>Очки</th><th>Уровень</th><th>Итог</th><th>Время, с</th><th>Дата</th></tr></thead><tbody id="recordsBody"></tbody></table></div>
+<p id="storageStatus" role="status"></p>
+</section>
+</main>
+<script>
+"use strict";
+
+// Immutable configuration shared by the independent game components.
+const CONFIG = Object.freeze({
+    cellSize: 40,
+    speed: 2,
+    tick: 1000 / 60,
+    actorRadius: 16,
+    pelletRadius: 2,
+    lives: 3,
+    powerTicks: 480,
+    shieldTicks: 180,
+    respawnTicks: 60,
+    map: Object.freeze([
+        "G................",
+        ".#.#####.#####.#.",
+        ".#.............#.",
+        "...#.#.###.#.#...",
+        "##...#..P..#...##",
+        "...#.#.###.#.#...",
+        ".#.............#.",
+        ".#.#####.#####.#.",
+        "................."
+    ])
+});
+const DIRECTIONS = Object.freeze([
+    { x: 1, y: 0 }, { x: 0, y: 1 }, { x: -1, y: 0 }, { x: 0, y: -1 }
+].map(Object.freeze));
+const IDLE = Object.freeze({ x: 0, y: 0 });
+const KEY_DIRECTIONS = Object.freeze({
+    ArrowRight: DIRECTIONS[0], ArrowDown: DIRECTIONS[1],
+    ArrowLeft: DIRECTIONS[2], ArrowUp: DIRECTIONS[3]
+});
+
+const STATES = Object.freeze({
+    READY: 'READY', PLAYING: 'PLAYING', PAUSED: 'PAUSED',
+    RESPAWNING: 'RESPAWNING', LEVEL_CLEAR: 'LEVEL_CLEAR', VICTORY: 'VICTORY', GAME_OVER: 'GAME_OVER'
+});
+const DIFFICULTIES = Object.freeze({
+    easy: { speed: 1.4, strategy: 'Random', chase: 300, scatter: 420, power: 600, frightened: 1 },
+    normal: { speed: 1.6, strategy: 'Greedy', chase: 480, scatter: 360, power: 480, frightened: 1.1 },
+    hard: { speed: 1.8, strategy: 'BFS', chase: 720, scatter: 240, power: 420, frightened: 1.2 },
+    expert: { speed: 2, strategy: 'A*', chase: 1500, scatter: 120, power: 240, frightened: 1.3 }
+});
+class GhostMode {
+    constructor(profile) {
+        this.profile = profile;
+        this.base = 'SCATTER';
+        this.remaining = profile.scatter;
+    }
+    mode(power) { return power > 0 ? 'FRIGHTENED' : this.base; }
+    tick(power) {
+        if (power > 0) return;
+        if (--this.remaining === 0) {
+            this.base = this.base === 'CHASE' ? 'SCATTER' : 'CHASE';
+            this.remaining = this.base === 'CHASE' ? this.profile.chase : this.profile.scatter;
+        }
+    }
+    direction(ghost, player, power) {
+        const maze = ghost.maze;
+        const start = maze.cellAt(ghost.x, ghost.y);
+        if (power > 0) {
+            const target = maze.cellAt(player.x, player.y);
+            let best = IDLE, distance = -1;
+            for (const d of DIRECTIONS.filter(d => ghost.canEnter(d))) {
+                const result = PathSearch.find(maze, {row:start.row+d.y,col:start.col+d.x}, target);
+                if (result.path && result.path.length > distance) {
+                    best = d; distance = result.path.length;
+                }
+            }
+            return best;
+        }
+        const target = {row: 0, col: maze.cols - 1};
+        if (start.row === target.row && start.col === target.col) return IDLE;
+        return PathSearch.find(maze, start, target).path?.[0] || IDLE;
+    }
+}
+class GameState {
+    constructor() { this.value = STATES.READY; }
+    transition(next) {
+        const allowed = {
+            READY: ['PLAYING'],
+            PLAYING: ['PAUSED', 'RESPAWNING', 'LEVEL_CLEAR', 'VICTORY', 'GAME_OVER', 'READY'],
+            PAUSED: ['PLAYING', 'RESPAWNING', 'LEVEL_CLEAR', 'READY'],
+            LEVEL_CLEAR: ['PLAYING', 'PAUSED', 'READY'],
+            RESPAWNING: ['PLAYING', 'PAUSED', 'READY'],
+            VICTORY: ['PLAYING', 'READY'],
+            GAME_OVER: ['PLAYING', 'READY']
+        };
+        if (!allowed[this.value].includes(next)) throw new Error('Invalid state transition');
+        this.value = next;
+    }
+}
+
+class Maze {
+    constructor(map, cellSize) {
+        this.map = map;
+        this.cellSize = cellSize;
+        this.rows = map.length;
+        this.cols = map[0].length;
+        this.walls = [];
+        this.starts = {};
+        this.pelletCells = [];
+        for (let row = 0; row < this.rows; row++) {
+            for (let col = 0; col < this.cols; col++) {
+                this.readTile(row, col);
+            }
+        }
+    }
+
+    readTile(row, col) {
+        const tile = this.map[row][col];
+        if (tile === '#') {
+            this.walls.push({ row, col });
+            return;
+        }
+        if (tile === 'P' || tile === 'G') {
+            this.starts[tile] = this.center(row, col);
+        }
+        if (tile !== 'P') this.pelletCells.push({ row, col });
+    }
+
+    center(row, col) {
+        return {
+            x: (col + 0.5) * this.cellSize,
+            y: (row + 0.5) * this.cellSize
+        };
+    }
+
+    cellAt(x, y) {
+        return {
+            row: Math.floor(y / this.cellSize),
+            col: Math.floor(x / this.cellSize)
+        };
+    }
+
+    isWalkable(row, col) {
+        return row >= 0 && row < this.rows && col >= 0 &&
+            col < this.cols && this.map[row][col] !== '#';
+    }
+
+    key(row, col) {
+        return row * this.cols + col;
+    }
+}
+
+class Level {
+    constructor(name, map) {
+        this.name = name;
+        this.map = Object.freeze([...map]);
+        Object.freeze(this);
+    }
+}
+
+class LevelValidator {
+    static validate(level) {
+        const map = level.map;
+        if (map.length !== 9 || map.some(row => typeof row !== 'string' || row.length !== 17 || /[^.#PG]/.test(row)))
+            throw new Error('Invalid level dimensions or tiles');
+        const tiles = map.join('');
+        if (tiles.split('P').length !== 2 || tiles.split('G').length !== 2)
+            throw new Error('Exactly one player and ghost required');
+        if ([[0,1],[0,15],[8,1],[8,15]].some(([r,c]) => map[r][c] !== '.') || map[0][16] === '#')
+            throw new Error('Invalid power or scatter cells');
+        const maze = new Maze(map, CONFIG.cellSize);
+        const start = maze.cellAt(maze.starts.P.x, maze.starts.P.y);
+        const queue = [start], visited = new Set([maze.key(start.row,start.col)]);
+        for (let i = 0; i < queue.length; i++) {
+            const p = queue[i];
+            for (const d of DIRECTIONS) {
+                const row = p.row + d.y, col = p.col + d.x, key = maze.key(row,col);
+                if (maze.isWalkable(row,col) && !visited.has(key)) {
+                    visited.add(key); queue.push({row,col});
+                }
+            }
+        }
+        if (visited.size !== maze.rows * maze.cols - maze.walls.length)
+            throw new Error('Disconnected maze');
+        return {walkable: visited.size, walls: maze.walls.length, pellets: maze.pelletCells.length};
+    }
+}
+
+class LevelManager {
+    constructor() {
+        this.levels = Object.freeze([
+            new Level('Classic', CONFIG.map),
+            new Level('Labyrinth', ["G................",".###.#######.###.",".....#.....#.....",".###.#.###.#.###.","........P........",".###.#.###.#.###.",".....#.....#.....",".###.#######.###.","................."]),
+            new Level('Crossroads', ["G................",".###.###.###.###.",".................",".#.#.#.#.#.#.#.#.",".......P.........",".#.#.#.#.#.#.#.#.",".................",".###.###.###.###.","................."])
+        ]);
+        this.levels.forEach(level => LevelValidator.validate(level));
+        this.reset();
+    }
+    reset() { this.index = 0; }
+    get current() { return this.levels[this.index]; }
+    get last() { return this.index === this.levels.length - 1; }
+    next() {
+        if (this.last) throw new Error('No next level');
+        this.index++;
+    }
+}
+
+class Actor {
+    constructor(maze, position, color) {
+        this.maze = maze;
+        this.x = position.x;
+        this.y = position.y;
+        this.color = color;
+        this.radius = CONFIG.actorRadius;
+        this.direction = IDLE;
+        this.speed = CONFIG.speed;
+    }
+
+    atCenter() {
+        const size = this.maze.cellSize;
+        return (this.x - size / 2) % size === 0 &&
+            (this.y - size / 2) % size === 0;
+    }
+
+    distanceToCenter(direction) {
+        const size = this.maze.cellSize;
+        const axis = direction.x ? this.x : this.y;
+        const sign = direction.x || direction.y;
+        const offset = ((axis - size / 2) % size + size) % size;
+        if (!sign) return 0;
+        if (offset < 1e-7 || size - offset < 1e-7) return size;
+        return sign > 0 ? size - offset : offset;
+    }
+
+    canMove(direction) {
+        const step = Math.min(this.speed, this.distanceToCenter(direction));
+        const { row, col } = this.maze.cellAt(this.x + direction.x * step, this.y + direction.y * step);
+        return this.maze.isWalkable(row, col);
+    }
+
+    canEnter(direction) {
+        if (direction === IDLE) return false;
+        const { row, col } = this.maze.cellAt(this.x, this.y);
+        return this.maze.isWalkable(row + direction.y, col + direction.x);
+    }
+
+    advance() {
+        if (this.atCenter() && !this.canEnter(this.direction)) return;
+        if (!this.canMove(this.direction)) return;
+        const distance = Math.min(this.speed, this.distanceToCenter(this.direction));
+        this.x += this.direction.x * distance;
+        this.y += this.direction.y * distance;
+        const size = this.maze.cellSize;
+        if (Math.abs(this.x - (Math.round((this.x - size / 2) / size) * size + size / 2)) < 1e-7)
+            this.x = Math.round((this.x - size / 2) / size) * size + size / 2;
+        if (Math.abs(this.y - (Math.round((this.y - size / 2) / size) * size + size / 2)) < 1e-7)
+            this.y = Math.round((this.y - size / 2) / size) * size + size / 2;
+    }
+
+    isReverse(direction) {
+        return direction.x === -this.direction.x && direction.y === -this.direction.y;
+    }
+}
+
+class Player extends Actor {
+    constructor(maze) {
+        super(maze, maze.starts.P, 'blue');
+        this.requested = IDLE;
+    }
+
+    update() {
+        const centered = this.atCenter();
+        const requested = this.requested;
+        if (requested !== IDLE && (centered || this.isReverse(requested)) &&
+            (centered ? this.canEnter(requested) : this.canMove(requested))) {
+            this.direction = requested;
+        }
+        this.advance();
+    }
+}
+
+class GreedyGhostAI {
+    chooseDirection(ghost, player) {
+        let options = DIRECTIONS.filter(direction => ghost.canEnter(direction));
+        const forward = options.filter(direction => !ghost.isReverse(direction));
+        if (forward.length) options = forward;
+        const size = ghost.maze.cellSize;
+        const distance = direction => Math.abs(player.x - ghost.x - size * direction.x) +
+            Math.abs(player.y - ghost.y - size * direction.y);
+        options.sort((a, b) => distance(a) - distance(b));
+        return options[0] || IDLE;
+    }
+}
+
+
+class RandomGhostAI {
+    constructor(seed = 42) {
+        this.state = seed >>> 0;
+    }
+
+    chooseDirection(ghost) {
+        let options = DIRECTIONS.filter(d => ghost.canEnter(d));
+        const forward = options.filter(d => !ghost.isReverse(d));
+        if (forward.length) options = forward;
+        this.state = (Math.imul(1664525, this.state) + 1013904223) >>> 0;
+        return options[Math.floor(this.state / 4294967296 * options.length)] || IDLE;
+    }
+}
+
+class SearchHeap {
+    constructor() { this.items = []; }
+    get length() { return this.items.length; }
+    static before(a,b) { return a.f < b.f || (a.f === b.f && a.order < b.order); }
+    push(value) {
+        const a = this.items;
+        let i = a.length;
+        a.push(value);
+        while (i > 0) {
+            const p = (i - 1) >>> 1;
+            if (!SearchHeap.before(value,a[p])) break;
+            a[i] = a[p];
+            i = p;
+        }
+        a[i] = value;
+    }
+    pop() {
+        const a = this.items;
+        const first = a[0], last = a.pop();
+        if (!a.length) return first;
+        let i = 0;
+        while (2*i+1 < a.length) {
+            let child = 2*i+1;
+            if (child+1 < a.length && SearchHeap.before(a[child+1],a[child])) child++;
+            if (!SearchHeap.before(a[child],last)) break;
+            a[i] = a[child];
+            i = child;
+        }
+        a[i] = last;
+        return first;
+    }
+}
+
+// Numeric vertex IDs and reusable workspace, scoped to each immutable maze.
+class IndexedSearchGraph {
+    constructor(maze) {
+        const size = maze.rows * maze.cols;
+        this.neighbors = new Int32Array(size * 4).fill(-1);
+        this.rows = new Int32Array(size);
+        this.cols = new Int32Array(size);
+        this.best = new Int32Array(size);
+        this.parent = new Int32Array(size);
+        this.direction = new Int8Array(size);
+        for (let r = 0; r < maze.rows; r++) {
+            for (let c = 0; c < maze.cols; c++) {
+                const id = maze.key(r,c);
+                this.rows[id] = r;
+                this.cols[id] = c;
+                if (!maze.isWalkable(r,c)) continue;
+                for (let d = 0; d < DIRECTIONS.length; d++) {
+                    const row = r + DIRECTIONS[d].y, col = c + DIRECTIONS[d].x;
+                    if (maze.isWalkable(row,col)) this.neighbors[id*4+d] = maze.key(row,col);
+                }
+            }
+        }
+    }
+}
+
+class PathSearch {
+    static graphs = new WeakMap();
+    static prepare(maze) {
+        let graph = this.graphs.get(maze);
+        if (!graph) {
+            graph = new IndexedSearchGraph(maze);
+            this.graphs.set(maze,graph);
+        }
+        return graph;
+    }
+    static find(maze,start,target,heuristic = false) {
+        if (!maze.isWalkable(start.row,start.col) || !maze.isWalkable(target.row,target.col))
+            return {path:null,expanded:0};
+        const graph = this.prepare(maze);
+        const {neighbors,rows,cols,best,parent,direction} = graph;
+        const source = maze.key(start.row,start.col), goal = maze.key(target.row,target.col);
+        const h = id => heuristic ? Math.abs(rows[id]-target.row)+Math.abs(cols[id]-target.col) : 0;
+        best.fill(-1);
+        best[source] = 0;
+        parent[source] = -1;
+        const open = heuristic ? new SearchHeap() : [];
+        open.push({id:source,g:0,f:h(source),order:0});
+        let head = 0, order = 1, expanded = 0;
+        while (heuristic ? open.length : head < open.length) {
+            const current = heuristic ? open.pop() : open[head++];
+            const id = current.id;
+            if (current.g !== best[id]) continue;
+            expanded++;
+            if (id === goal) {
+                const path = [];
+                for (let k = goal; parent[k] !== -1; k = parent[k]) path.push(DIRECTIONS[direction[k]]);
+                return {path:path.reverse(),expanded};
+            }
+            const g = current.g+1;
+            for (let d = 0; d < 4; d++) {
+                const next = neighbors[id*4+d];
+                if (next === -1 || (best[next] !== -1 && best[next] <= g)) continue;
+                best[next] = g;
+                parent[next] = id;
+                direction[next] = d;
+                open.push({id:next,g,f:g+h(next),order:order++});
+            }
+        }
+        return {path:null,expanded};
+    }
+}
+
+class BFSGhostAI {
+    chooseDirection(ghost, player) {
+        const maze = ghost.maze;
+        const result = PathSearch.find(maze, maze.cellAt(ghost.x, ghost.y), maze.cellAt(player.x, player.y));
+        return result.path?.[0] || IDLE;
+    }
+}
+
+class AStarGhostAI {
+    chooseDirection(ghost, player) {
+        const maze = ghost.maze;
+        const result = PathSearch.find(maze, maze.cellAt(ghost.x, ghost.y), maze.cellAt(player.x, player.y), true);
+        return result.path?.[0] || IDLE;
+    }
+}
+
+function createGhostAI(strategy, seed) {
+    switch (strategy) {
+        case 'Random': return new RandomGhostAI(seed);
+        case 'Greedy': return new GreedyGhostAI();
+        case 'BFS': return new BFSGhostAI();
+        case 'A*': return new AStarGhostAI();
+        default: throw new Error('Unknown strategy');
+    }
+}
+
+class Ghost extends Actor {
+    constructor(maze, ai) {
+        super(maze, maze.starts.G, 'Red');
+        this.ai = ai;
+    }
+
+    update(player) {
+        if (this.atCenter()) this.direction = this.ai.chooseDirection(this, player);
+        this.advance();
+    }
+}
+
+class Pellet {
+    constructor(position, power = false) {
+        this.power = power;
+        this.points = power ? 50 : 10;
+        this.x = position.x;
+        this.y = position.y;
+        this.radius = power ? 3 : CONFIG.pelletRadius;
+        this.color = power ? '#e69b00' : 'Gray';
+    }
+
+    touches(player) {
+        return Math.hypot(player.x - this.x, player.y - this.y) <=
+            player.radius + this.radius;
+    }
+}
+
+class PelletStore {
+    constructor(maze) {
+        this.maze = maze;
+        this.remaining = new Map();
+        for (const { row, col } of maze.pelletCells) {
+            this.remaining.set(maze.key(row, col), new Pellet(maze.center(row, col), (row === 0 || row === maze.rows - 1) && (col === 1 || col === maze.cols - 2)));
+        }
+    }
+
+    collect(player) {
+        // The sum of radii (18) is strictly less than half a cell (20).
+        // A pellet in another cell therefore cannot touch the player.
+        const { row, col } = this.maze.cellAt(player.x, player.y);
+        const key = this.maze.key(row, col);
+        const pellet = this.remaining.get(key);
+        if (!pellet || !pellet.touches(player)) return false;
+        this.remaining.delete(key);
+        return pellet;
+    }
+}
+
+class Renderer {
+    constructor(canvas, scoreElement, maze) {
+        this.canvas = canvas;
+        this.context = canvas.getContext('2d');
+        this.scoreElement = scoreElement;
+        this.maze = maze;
+        canvas.width = maze.cols * maze.cellSize;
+        canvas.height = maze.rows * maze.cellSize;
+        this.phase = 0;
+        this.previousPosition = null;
+        this.reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        this.wallShapes = this.buildWalls();
+        this.staticLayer = null;
+        this.buildStaticLayer();
+        this.overlay = document.getElementById('overlay');
+        this.overlayTitle = document.getElementById('overlayTitle');
+        this.overlayHint = document.getElementById('overlayHint');
+        this.lifeIcons = document.getElementById('lives');
+    }
+
+    setMaze(maze) {
+        this.maze = maze;
+        this.canvas.width = maze.cols * maze.cellSize;
+        this.canvas.height = maze.rows * maze.cellSize;
+        this.wallShapes = this.buildWalls();
+        this.buildStaticLayer();
+        this.previousPosition = null;
+        this.phase = 0;
+    }
+
+    buildWalls() {
+        // Merge straight runs of wall cells into rectangles, preserving the map.
+        const seen = new Set(), shapes = [], maze = this.maze;
+        for (const { row, col } of maze.walls) {
+            if (seen.has(maze.key(row, col))) continue;
+            let width = 1, height = 1;
+            while (col + width < maze.cols && maze.map[row][col + width] === '#' &&
+                !seen.has(maze.key(row, col + width))) width++;
+            while (row + height < maze.rows && Array.from({ length: width }, (_, i) => col + i)
+                .every(c => maze.map[row + height][c] === '#' && !seen.has(maze.key(row + height, c)))) height++;
+            for (let r = row; r < row + height; r++)
+                for (let c = col; c < col + width; c++) seen.add(maze.key(r, c));
+            shapes.push({ row, col, width, height });
+        }
+        return shapes;
+    }
+
+    // Detached canvas, rebuilt only when the maze changes. A failed cache is optional.
+    buildStaticLayer() {
+        this.staticLayer = null;
+        try {
+            const layer = document.createElement('canvas');
+            layer.width = this.canvas.width;
+            layer.height = this.canvas.height;
+            const ctx = layer.getContext('2d');
+            if (!ctx || !this.context.drawImage) return;
+            this.drawBackground(ctx);
+            this.drawWalls(ctx);
+            this.staticLayer = layer;
+        } catch { /* Preserve the direct drawing fallback. */ }
+    }
+
+    drawBackground(ctx = this.context) {
+        ctx.fillStyle = '#080b11';
+        ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+    }
+
+    drawStaticLayer() {
+        if (this.staticLayer) {
+            try {
+                this.context.drawImage(this.staticLayer, 0, 0);
+                return;
+            } catch { this.staticLayer = null; }
+        }
+        this.drawBackground();
+        this.drawWalls();
+    }
+
+    drawWalls(ctx = this.context) {
+        const size = this.maze.cellSize;
+        ctx.fillStyle = '#101b30';
+        ctx.strokeStyle = '#397df5';
+        ctx.lineWidth = 3;
+        for (const wall of this.wallShapes) {
+            ctx.beginPath();
+            ctx.roundRect(wall.col * size + 3, wall.row * size + 3,
+                wall.width * size - 6, wall.height * size - 6, 7);
+            ctx.fill();
+            ctx.stroke();
+        }
+    }
+
+    circle(x, y, radius, color) {
+        const ctx = this.context;
+        ctx.beginPath();
+        ctx.arc(x, y, radius, 0, Math.PI * 2);
+        ctx.fillStyle = color;
+        ctx.fill();
+    }
+
+    drawPellet(pellet) {
+        const radius = pellet.power ? 5 + (this.reducedMotion ? 0 : 1.4 * Math.sin(this.phase / 8)) : 2.5;
+        this.circle(pellet.x, pellet.y, radius, '#fff0cd');
+    }
+
+    drawPlayer(player, shield, moving) {
+        const ctx = this.context;
+        const angle = player.direction === IDLE ? 0 : Math.atan2(player.direction.y, player.direction.x);
+        const mouth = moving && !this.reducedMotion ? 0.08 + 0.42 * Math.abs(Math.sin(this.phase / 3)) : 0.28;
+        ctx.beginPath();
+        ctx.moveTo(player.x, player.y);
+        ctx.arc(player.x, player.y, player.radius, angle + mouth, angle + Math.PI * 2 - mouth);
+        ctx.closePath();
+        ctx.fillStyle = '#ffdf36';
+        ctx.fill();
+        if (shield > 0) {
+            ctx.beginPath();
+            ctx.arc(player.x, player.y, player.radius + 2, 0, Math.PI * 2);
+            ctx.strokeStyle = '#86b5ff';
+            ctx.lineWidth = 1.5;
+            ctx.stroke();
+        }
+    }
+
+    drawGhost(ghost, power) {
+        const ctx = this.context, r = ghost.radius;
+        ctx.save();
+        ctx.translate(ghost.x, ghost.y);
+        ctx.beginPath();
+        ctx.moveTo(-r, r * .85);
+        ctx.lineTo(-r, 0);
+        ctx.arc(0, 0, r, Math.PI, 0);
+        ctx.lineTo(r, r * .85);
+        for (let i = 0; i < 3; i++) {
+            const x = r - i * 2 * r / 3;
+            ctx.lineTo(x - r / 3, r * .48);
+            ctx.lineTo(x - 2 * r / 3, r * .85);
+        }
+        ctx.closePath();
+        ctx.fillStyle = power > 0 ? '#7759df' : '#f04452';
+        ctx.fill();
+        for (const x of [-5.5, 5.5]) {
+            this.circle(x, -3, 5, '#fff');
+            this.circle(x + ghost.direction.x * 2, -3 + ghost.direction.y * 2, 2.4, '#17243b');
+        }
+        ctx.restore();
+    }
+
+    drawStatus(state, lives, score) {
+        const messages = {
+            PAUSED: ['Пауза', 'Space или Resume — продолжить'],
+            VICTORY: ['Победа!', 'Очки: ' + score + ' · Start — новая игра'],
+            GAME_OVER: ['Игра окончена', 'Очки: ' + score + ' · Start — повторить'],
+            LEVEL_CLEAR: ['Уровень пройден!', 'Следующий лабиринт'],
+            RESPAWNING: ['Возрождение', 'Приготовьтесь']
+        };
+        const message = messages[state];
+        this.overlay.hidden = !message;
+        this.overlayTitle.textContent = message?.[0] || '';
+        this.overlayHint.textContent = message?.[1] || '';
+        if (this.lifeIcons.childElementCount !== lives) {
+            this.lifeIcons.replaceChildren(...Array.from({ length: lives }, () => {
+                const icon = document.createElement('span');
+                icon.setAttribute('aria-hidden', 'true');
+                return icon;
+            }));
+        }
+        this.lifeIcons.setAttribute('aria-label', 'Жизни: ' + lives);
+    }
+
+    render(player, ghost, pellets, score, state, lives, power, shield) {
+        if (state === STATES.READY) this.phase = 0;
+        if (state === STATES.PLAYING) this.phase++;
+        const moving = this.previousPosition !== null &&
+            (player.x !== this.previousPosition.x || player.y !== this.previousPosition.y);
+        this.previousPosition = { x: player.x, y: player.y };
+        this.drawStaticLayer();
+        // Batch non-overlapping ordinary pellets, preserving independent subpaths.
+        const ctx = this.context;
+        ctx.beginPath();
+        for (const pellet of pellets.remaining.values()) {
+            if (pellet.power) continue;
+            ctx.moveTo(pellet.x + 2.5, pellet.y);
+            ctx.arc(pellet.x, pellet.y, 2.5, 0, Math.PI * 2);
+        }
+        ctx.fillStyle = '#fff0cd';
+        ctx.fill();
+        for (const pellet of pellets.remaining.values()) if (pellet.power) this.drawPellet(pellet);
+        this.drawPlayer(player, shield, moving);
+        this.drawGhost(ghost, power);
+        this.scoreElement.textContent = 'Очки: ' + score;
+        this.drawStatus(state, lives, score);
+    }
+}
+
+// Original synthesized cues; all times are seconds, frequencies in Hz.
+const SOUND_CUES = Object.freeze({
+    start: [[330,.09,0],[440,.09,.11],[660,.14,.22]],
+    pellet: [[520,.045,0]],
+    power: [[260,.09,0],[390,.09,.10],[780,.15,.20]],
+    capture: [[880,.06,0],[660,.06,.07],[1040,.12,.14]],
+    life: [[440,.12,0],[300,.12,.13],[150,.22,.26]],
+    clear: [[392,.12,0],[523,.12,.14],[659,.20,.28]],
+    victory: [[440,.12,0],[587,.12,.14],[740,.12,.28],[880,.28,.42]],
+    defeat: [[330,.15,0],[220,.15,.17],[110,.30,.34]]
+});
+
+class AudioManager {
+    constructor(factory = () => {
+        const Context = window.AudioContext || window.webkitAudioContext;
+        return Context ? new Context() : null;
+    }) {
+        this.factory = factory;
+        this.context = null;
+        this.master = null;
+        this.volume = .35;
+        this.muted = false;
+        this.voices = new Set();
+        this.available = true;
+        this.pending = null;
+        this.generation = 0;
+    }
+
+    async unlock() {
+        try {
+            if (!this.available) return false;
+            if (this.pending) return await this.pending;
+            if (!this.context) {
+                this.context = this.factory();
+                if (!this.context) { this.available = false; return false; }
+                this.master = this.context.createGain();
+                this.master.gain.value = this.muted ? 0 : this.volume * .2;
+                this.master.connect(this.context.destination);
+            }
+            if (this.context.state === 'running') return true;
+            this.pending = this.context.resume();
+            await this.pending;
+            return this.context.state === 'running';
+        } catch {
+            return false;
+        } finally {
+            this.pending = null;
+        }
+    }
+
+    setVolume(value) {
+        if (!Number.isFinite(value)) return;
+        this.volume = Math.max(0, Math.min(1, value));
+        this.applyGain();
+        if (this.volume === 0) this.stopAll();
+    }
+
+    setMuted(value) {
+        this.muted = Boolean(value);
+        this.applyGain();
+        if (this.muted) this.stopAll();
+    }
+
+    applyGain() {
+        try {
+            if (this.master) this.master.gain.value = this.muted ? 0 : this.volume * .2;
+        } catch { /* Audio failures never interrupt game logic. */ }
+    }
+
+    stopAll() {
+        this.generation++;
+        for (const voice of this.voices) {
+            try { voice.stop(); } catch { /* Already ended. */ }
+        }
+        this.voices.clear();
+    }
+
+    play(name) {
+        if (this.muted || this.volume === 0 || this.context?.state !== 'running' || !this.master) return;
+        const cue = SOUND_CUES[name];
+        if (!cue) return;
+        try {
+            // Bound simultaneous voices even when several simulation ticks run in one frame.
+            if (this.voices.size + cue.length > 24) return;
+            const now = this.context.currentTime;
+            for (const [frequency, duration, offset] of cue) {
+                const oscillator = this.context.createOscillator();
+                const envelope = this.context.createGain();
+                const at = now + offset;
+                oscillator.type = name === 'pellet' ? 'triangle' : 'sine';
+                oscillator.frequency.value = frequency;
+                envelope.gain.setValueAtTime(0, at);
+                envelope.gain.linearRampToValueAtTime(.45, at + .008);
+                envelope.gain.exponentialRampToValueAtTime(.001, at + duration);
+                oscillator.connect(envelope);
+                envelope.connect(this.master);
+                oscillator.onended = () => {
+                    this.voices.delete(oscillator);
+                    try { oscillator.disconnect(); envelope.disconnect(); } catch { /* Ended. */ }
+                };
+                this.voices.add(oscillator);
+                oscillator.start(at);
+                oscillator.stop(at + duration);
+            }
+        } catch { /* Sound is optional. */ }
+    }
+}
+
+const STORAGE_KEY = 'pacman.research.v1';
+const STRATEGIES = Object.freeze(['Random','Greedy','BFS','A*']);
+const DEFAULT_SETTINGS = Object.freeze({name:'PLAYER', difficulty:'normal', strategy:'Greedy', seed:42, volume:.35, muted:false});
+
+class LocalStore {
+    constructor(factory = () => window.localStorage) {
+        this.storage = null;
+        this.available = true;
+        this.settings = {...DEFAULT_SETTINGS};
+        this.records = [];
+        try {
+            this.storage = factory();
+            if (!this.storage) throw Error('Storage unavailable');
+            const raw = this.storage.getItem(STORAGE_KEY);
+            if (raw !== null) {
+                const data = JSON.parse(raw);
+                if (data?.version !== 1) throw Error('Unsupported schema');
+                this.settings = LocalStore.settings(data.settings);
+                this.records = LocalStore.normalize(data.records);
+            }
+        } catch { this.available = false; }
+    }
+
+    static name(value) {
+        return typeof value === 'string' ? value.trim().slice(0,24) || 'PLAYER' : 'PLAYER';
+    }
+
+    static settings(value) {
+        const v = value && typeof value === 'object' ? value : {};
+        const difficulty = Object.hasOwn(DIFFICULTIES,v.difficulty) ? v.difficulty : 'normal';
+        return {name:LocalStore.name(v.name), difficulty,
+            strategy:STRATEGIES.includes(v.strategy) ? v.strategy : DIFFICULTIES[difficulty].strategy,
+            seed:Number.isSafeInteger(v.seed) ? v.seed : 42,
+            volume:typeof v.volume === 'number' && Number.isFinite(v.volume) ? Math.max(0,Math.min(1,v.volume)) : .35,
+            muted:typeof v.muted === 'boolean' ? v.muted : false};
+    }
+
+    static valid(r) {
+        return r && typeof r.name === 'string' && r.name.trim().length > 0 && r.name.length <= 24 &&
+            Object.hasOwn(DIFFICULTIES,r.difficulty) && STRATEGIES.includes(r.strategy) &&
+            Number.isSafeInteger(r.seed) && Number.isSafeInteger(r.score) && r.score >= 0 &&
+            Number.isInteger(r.level) && r.level >= 1 && r.level <= 3 &&
+            Number.isSafeInteger(r.ticks) && r.ticks >= 0 &&
+            ['VICTORY','GAME_OVER'].includes(r.result) && (r.result !== 'VICTORY' || r.level === 3) &&
+            typeof r.date === 'string' && Number.isFinite(Date.parse(r.date));
+    }
+
+    static normalize(records) {
+        if (!Array.isArray(records)) return [];
+        const groups = new Map();
+        for (const r of records) {
+            if (!LocalStore.valid(r)) continue;
+            const key = r.difficulty + ':' + r.strategy;
+            if (!groups.has(key)) groups.set(key,[]);
+            groups.get(key).push({name:r.name,difficulty:r.difficulty,strategy:r.strategy,seed:r.seed,
+                score:r.score,level:r.level,ticks:r.ticks,result:r.result,date:r.date});
+        }
+        return [...groups.values()].flatMap(group=>group.sort((a,b)=>b.score-a.score ||
+            b.level-a.level || Number(b.result==='VICTORY')-Number(a.result==='VICTORY') ||
+            a.ticks-b.ticks || Date.parse(a.date)-Date.parse(b.date)).slice(0,10));
+    }
+
+    save() {
+        try {
+            if (!this.storage) throw Error('Storage unavailable');
+            this.storage.setItem(STORAGE_KEY,JSON.stringify({version:1,settings:this.settings,records:this.records}));
+            this.available = true;
+        } catch { this.available = false; }
+    }
+
+    setSettings(value) { this.settings = LocalStore.settings(value); this.save(); }
+    add(record) {
+        if (!LocalStore.valid(record)) return;
+        this.records = LocalStore.normalize([...this.records,record]);
+        this.save();
+    }
+    top(difficulty,strategy) {
+        return this.records.filter(r=>r.difficulty===difficulty&&r.strategy===strategy);
+    }
+}
+
+class Game {
+    constructor({ canvas, score, start, stop, status }) {
+        this.controls = { start, stop, status, pause: document.getElementById('pause') };
+        this.levelManager = new LevelManager();
+        this.maze = new Maze(this.levelManager.current.map, CONFIG.cellSize);
+        this.renderer = new Renderer(canvas, score, this.maze);
+        this.strategy = document.getElementById('strategy');
+        this.seed = document.getElementById('seed');
+        this.difficulty = document.getElementById('difficulty');
+        this.hud = document.getElementById('hud');
+        this.audio = new AudioManager();
+        this.muteButton = document.getElementById('mute');
+        this.volumeInput = document.getElementById('volume');
+        this.audioStatus = document.getElementById('audioStatus');
+        this.store = new LocalStore();
+        this.playerName = document.getElementById('playerName');
+        this.recordsBody = document.getElementById('recordsBody');
+        this.recordsGroup = document.getElementById('recordsGroup');
+        this.storageStatus = document.getElementById('storageStatus');
+        const saved = this.store.settings;
+        this.playerName.value = saved.name;
+        this.difficulty.value = saved.difficulty;
+        this.strategy.value = saved.strategy;
+        this.seed.value = String(saved.seed);
+        this.audio.setMuted(saved.muted);
+        this.audio.setVolume(saved.volume);
+        this.volumeInput.value = String(Math.round(saved.volume*100));
+        this.muteButton.textContent = saved.muted ? 'Звук: выкл.' : 'Звук: вкл.';
+        this.muteButton.setAttribute('aria-pressed',String(saved.muted));
+        this.fsm = new GameState();
+        this.frameId = null;
+        this.lastTime = null;
+        this.accumulator = 0;
+        this.reset();
+        start.addEventListener('click', () => {
+            this.start();
+            const generation = this.audio.generation;
+            this.enableAudio().then(ok => {
+                if (ok && this.audio.generation === generation && this.state === STATES.PLAYING)
+                    this.audio.play('start');
+            });
+        });
+        this.muteButton.addEventListener('click', () => {
+            this.audio.setMuted(!this.audio.muted);
+            this.muteButton.textContent = this.audio.muted ? 'Звук: выкл.' : 'Звук: вкл.';
+            this.muteButton.setAttribute('aria-pressed', String(this.audio.muted));
+            this.persistSettings();
+            if (!this.audio.muted) this.enableAudio();
+        });
+        this.volumeInput.addEventListener('input', () => {
+            this.audio.setVolume(Number(this.volumeInput.value)/100);
+            this.persistSettings();
+        });
+        for (const input of [this.playerName,this.seed,this.strategy])
+            input.addEventListener('change',()=>{this.persistSettings();this.renderRecords();});
+        stop.addEventListener('click', () => this.stop());
+        this.controls.pause.addEventListener('click', () => this.togglePause());
+        this.difficulty.addEventListener('change', () => {
+            this.strategy.value = DIFFICULTIES[this.difficulty.value].strategy;
+            this.persistSettings();
+            this.renderRecords();
+        });
+        document.addEventListener('keydown', event => this.handleKey(event));
+        this.render();
+        this.renderRecords();
+    }
+
+    persistSettings() {
+        this.store.setSettings({name:this.playerName.value,difficulty:this.difficulty.value,
+            strategy:this.strategy.value,seed:Number(this.seed.value),volume:this.audio.volume,muted:this.audio.muted});
+        this.storageStatus.textContent = this.store.available ? 'Данные хранятся в этом браузере' : 'Хранилище недоступно или повреждено: данные могут не сохраниться';
+    }
+
+    renderRecords() {
+        const rows = this.store.top(this.difficulty.value,this.strategy.value);
+        this.recordsGroup.textContent = this.difficulty.value + ' · ' + this.strategy.value + ' · Top 10';
+        const nodes = rows.map((r,i)=>{
+            const tr = document.createElement('tr');
+            for (const value of [i+1,r.name,r.score,r.level,r.result==='VICTORY'?'Победа':'Поражение',(r.ticks/60).toFixed(1),r.date.slice(0,10)]) {
+                const td = document.createElement('td');
+                td.textContent = String(value);
+                tr.append(td);
+            }
+            return tr;
+        });
+        if (!nodes.length) {
+            const tr = document.createElement('tr'), td = document.createElement('td');
+            td.colSpan = 7; td.textContent = 'Пока нет завершённых игр'; tr.append(td); nodes.push(tr);
+        }
+        this.recordsBody.replaceChildren(...nodes);
+        this.storageStatus.textContent = this.store.available ? 'Данные хранятся в этом браузере' : 'Хранилище недоступно или повреждено: данные могут не сохраниться';
+    }
+
+    finishRecord() {
+        if (this.recorded || !['VICTORY','GAME_OVER'].includes(this.state)) return;
+        this.recorded = true;
+        this.store.add({...this.sessionSettings,score:this.score,level:this.levelManager.index+1,
+            ticks:this.sessionTicks,result:this.state,date:new Date().toISOString()});
+        this.renderRecords();
+    }
+
+    async enableAudio() {
+        const ok = await this.audio.unlock();
+        this.audioStatus.textContent = ok ? 'Аудиосистема готова' : 'Звук недоступен — игра продолжается';
+        return ok;
+    }
+
+    get state() { return this.fsm.value; }
+    get active() { return [STATES.PLAYING, STATES.RESPAWNING, STATES.LEVEL_CLEAR].includes(this.state); }
+
+    reset() {
+        this.sessionTicks = 0;
+        this.recorded = false;
+        this.lives = CONFIG.lives;
+        this.score = 0;
+        this.levelManager.reset();
+        this.profile = DIFFICULTIES[this.difficulty.value];
+        this.ai = createGhostAI(this.strategy.value, Number(this.seed.value));
+        this.loadLevel();
+    }
+
+    loadLevel() {
+        this.maze = new Maze(this.levelManager.current.map, CONFIG.cellSize);
+        this.renderer.setMaze(this.maze);
+        this.levelWait = 0;
+        this.power = 0;
+        this.shield = 0;
+        this.respawn = 0;
+        this.captureLocked = false;
+        this.pellets = new PelletStore(this.maze);
+        this.ghostMode = new GhostMode(this.profile);
+        this.resetActors();
+    }
+
+    resetGhost() {
+        this.ghost = new Ghost(this.maze, this.ai);
+        this.ghost.speed = this.power > 0 ? this.profile.frightened : this.profile.speed;
+    }
+
+    resetActors() {
+        this.player = new Player(this.maze);
+        this.resetGhost();
+    }
+
+    handleKey(event) {
+        if (event.code === 'Space' && !['INPUT', 'SELECT', 'BUTTON'].includes(event.target.tagName)) {
+            event.preventDefault();
+            if (!event.repeat) this.togglePause();
+            return;
+        }
+        if (!Object.hasOwn(KEY_DIRECTIONS, event.key) || this.state !== STATES.PLAYING) return;
+        event.preventDefault();
+        this.player.requested = KEY_DIRECTIONS[event.key];
+    }
+
+    contact() {
+        return Math.hypot(this.player.x - this.ghost.x, this.player.y - this.ghost.y) <=
+            this.player.radius + this.ghost.radius;
+    }
+
+    resolveContact() {
+        if (!this.contact()) {
+            this.captureLocked = false;
+            return;
+        }
+        if (this.power > 0) {
+            if (this.captureLocked) return;
+            this.score += 200;
+            this.audio.play('capture');
+            this.resetGhost();
+            this.captureLocked = true;
+        } else if (this.shield === 0) {
+            this.lives--;
+            this.power = 0;
+            if (this.lives === 0) {
+                this.fsm.transition(STATES.GAME_OVER);
+                this.audio.stopAll();
+                this.audio.play('defeat');
+                this.finishRecord();
+            } else {
+                this.audio.stopAll();
+                this.audio.play('life');
+                this.resetActors();
+                this.ghostMode = new GhostMode(this.profile);
+                this.captureLocked = false;
+                this.respawn = CONFIG.respawnTicks;
+                this.shield = CONFIG.shieldTicks;
+                this.fsm.transition(STATES.RESPAWNING);
+            }
+        }
+    }
+
+    update() {
+        if (this.active) this.sessionTicks++;
+        if (this.state === STATES.LEVEL_CLEAR) {
+            if (--this.levelWait === 0) {
+                this.levelManager.next();
+                this.loadLevel();
+                this.fsm.transition(STATES.PLAYING);
+            }
+            return;
+        }
+        if (this.state === STATES.RESPAWNING) {
+            if (--this.respawn === 0) this.fsm.transition(STATES.PLAYING);
+            return;
+        }
+        if (this.state !== STATES.PLAYING) return;
+        this.player.update();
+        const pellet = this.pellets.collect(this.player);
+        if (pellet) {
+            this.score += pellet.points;
+            if (pellet.power) this.power = this.profile.power;
+            this.audio.play(pellet.power ? 'power' : 'pellet');
+        }
+        if (this.pellets.remaining.size === 0) {
+            this.audio.stopAll();
+            if (this.levelManager.last) {
+                this.fsm.transition(STATES.VICTORY);
+                this.audio.play('victory');
+                this.finishRecord();
+            }
+            else {
+                this.levelWait = 120;
+                this.fsm.transition(STATES.LEVEL_CLEAR);
+                this.audio.play('clear');
+            }
+            return;
+        }
+        this.ghost.speed = this.power > 0 ? this.profile.frightened : this.profile.speed;
+        if (this.ghostMode.mode(this.power) === 'CHASE') this.ghost.update(this.player);
+        else {
+            if (this.ghost.atCenter()) this.ghost.direction = this.ghostMode.direction(this.ghost, this.player, this.power);
+            this.ghost.advance();
+        }
+        this.ghostMode.tick(this.power);
+        this.resolveContact();
+        if (this.state === STATES.PLAYING) {
+            if (this.power > 0 && !pellet?.power) this.power--;
+            if (this.shield > 0) this.shield--;
+        }
+    }
+
+    render() {
+        this.ghost.color = this.power > 0 ? '#8555cc' : 'Red';
+        this.player.color = this.shield > 0 ? '#60a5fa' : 'blue';
+        this.renderer.render(this.player, this.ghost, this.pellets, this.score, this.state, this.lives, this.power, this.shield);
+        this.hud.textContent = 'Уровень ' + (this.levelManager.index + 1) + '/' + this.levelManager.levels.length + ' · ' + this.levelManager.current.name + ' | Жизни: ' + this.lives + ' | Осталось: ' + this.pellets.remaining.size +
+            ' | Бонус: ' + Math.ceil(this.power / 60) + ' с | Защита: ' + Math.ceil(this.shield / 60) + ' с | Режим: ' + this.ghostMode.mode(this.power);
+        this.controls.status.textContent = ({
+            READY: 'Нажмите Start. Управление — стрелками, пауза — Space.',
+            PLAYING: 'Игра запущена.', PAUSED: 'Пауза.',
+            RESPAWNING: 'Возрождение...', LEVEL_CLEAR: 'Уровень пройден!', VICTORY: 'Победа!', GAME_OVER: 'Игра окончена.'
+        })[this.state];
+        const session = this.active || this.state === STATES.PAUSED;
+        this.controls.start.disabled = session;
+        this.controls.stop.disabled = this.state === STATES.READY;
+        this.controls.pause.disabled = !session;
+        this.controls.pause.textContent = this.state === STATES.PAUSED ? 'Resume' : 'Pause';
+        this.playerName.disabled = this.strategy.disabled = this.seed.disabled = this.difficulty.disabled = session;
+    }
+
+    schedule() {
+        if (this.active && this.frameId === null)
+            this.frameId = requestAnimationFrame(time => this.loop(time));
+    }
+
+    cancel() {
+        if (this.frameId !== null) cancelAnimationFrame(this.frameId);
+        this.frameId = null;
+        this.lastTime = null;
+        this.accumulator = 0;
+    }
+
+    loop(time) {
+        this.frameId = null;
+        if (!this.active) return;
+        if (this.lastTime === null) this.lastTime = time;
+        this.accumulator += Math.min(time - this.lastTime, 100);
+        this.lastTime = time;
+        while (this.active && this.accumulator >= CONFIG.tick) {
+            this.update();
+            this.accumulator -= CONFIG.tick;
+        }
+        this.render();
+        this.schedule();
+    }
+
+    start() {
+        if (this.active || this.state === STATES.PAUSED) return;
+        this.cancel();
+        this.audio.stopAll();
+        this.persistSettings();
+        this.sessionSettings = {...this.store.settings};
+        this.reset();
+        this.fsm.transition(STATES.PLAYING);
+        this.render();
+        this.schedule();
+    }
+
+    togglePause() {
+        if (this.active) {
+            this.resumeState = this.state;
+            this.fsm.transition(STATES.PAUSED);
+            this.audio.stopAll();
+            this.cancel();
+        } else if (this.state === STATES.PAUSED) {
+            this.fsm.transition(this.resumeState);
+            this.schedule();
+        }
+        this.render();
+    }
+
+    stop() {
+        this.audio.stopAll();
+        this.cancel();
+        if (this.state !== STATES.READY) this.fsm.transition(STATES.READY);
+        this.reset();
+        this.render();
+    }
+}
+
+const game = new Game({
+    canvas: document.getElementById('canvas'),
+    score: document.getElementById('idScore'),
+    start: document.getElementById('start'),
+    stop: document.getElementById('stop'),
+    status: document.getElementById('status')
+});
+</script>
+</body>
+</html>
