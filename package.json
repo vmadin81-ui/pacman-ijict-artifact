@@ -1,0 +1,14 @@
+{
+  "name": "pacman-research",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "metrics": "node tools/metrics.cjs",
+    "quality": "node tools/quality.mjs"
+  },
+  "devDependencies": {
+    "typescript": "5.8.3",
+    "eslint": "9.39.1",
+    "prettier": "3.6.2"
+  }
+}
