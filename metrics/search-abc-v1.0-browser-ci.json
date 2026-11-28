@@ -1,0 +1,1180 @@
+{
+  "results": [
+    {
+      "map": "Classic",
+      "algorithm": "BFS",
+      "vertices": 105,
+      "pairs": 11025,
+      "expanded": 584325,
+      "checksum": 105536,
+      "matched": 11025
+    },
+    {
+      "map": "Classic",
+      "algorithm": "A*",
+      "vertices": 105,
+      "pairs": 11025,
+      "expanded": 203675,
+      "checksum": 105536,
+      "matched": 11025
+    },
+    {
+      "map": "Labyrinth",
+      "algorithm": "BFS",
+      "vertices": 101,
+      "pairs": 10201,
+      "expanded": 520251,
+      "checksum": 99520,
+      "matched": 10201
+    },
+    {
+      "map": "Labyrinth",
+      "algorithm": "A*",
+      "vertices": 101,
+      "pairs": 10201,
+      "expanded": 179791,
+      "checksum": 99520,
+      "matched": 10201
+    },
+    {
+      "map": "Crossroads",
+      "algorithm": "BFS",
+      "vertices": 113,
+      "pairs": 12769,
+      "expanded": 727833,
+      "checksum": 114160,
+      "matched": 12769
+    },
+    {
+      "map": "Crossroads",
+      "algorithm": "A*",
+      "vertices": 113,
+      "pairs": 12769,
+      "expanded": 248049,
+      "checksum": 114160,
+      "matched": 12769
+    }
+  ],
+  "samples": [
+    {
+      "map": "Classic",
+      "algorithm": "BFS",
+      "repeat": 1,
+      "version": "A",
+      "queries": 11025,
+      "ms": 85.5
+    },
+    {
+      "map": "Classic",
+      "algorithm": "BFS",
+      "repeat": 1,
+      "version": "B",
+      "queries": 11025,
+      "ms": 81.69999999998254
+    },
+    {
+      "map": "Classic",
+      "algorithm": "BFS",
+      "repeat": 1,
+      "version": "C",
+      "queries": 11025,
+      "ms": 8.200000000011642
+    },
+    {
+      "map": "Classic",
+      "algorithm": "BFS",
+      "repeat": 2,
+      "version": "B",
+      "queries": 11025,
+      "ms": 81.60000000000582
+    },
+    {
+      "map": "Classic",
+      "algorithm": "BFS",
+      "repeat": 2,
+      "version": "C",
+      "queries": 11025,
+      "ms": 8.199999999982538
+    },
+    {
+      "map": "Classic",
+      "algorithm": "BFS",
+      "repeat": 2,
+      "version": "A",
+      "queries": 11025,
+      "ms": 87.5
+    },
+    {
+      "map": "Classic",
+      "algorithm": "BFS",
+      "repeat": 3,
+      "version": "C",
+      "queries": 11025,
+      "ms": 8.300000000017462
+    },
+    {
+      "map": "Classic",
+      "algorithm": "BFS",
+      "repeat": 3,
+      "version": "A",
+      "queries": 11025,
+      "ms": 105.89999999999418
+    },
+    {
+      "map": "Classic",
+      "algorithm": "BFS",
+      "repeat": 3,
+      "version": "B",
+      "queries": 11025,
+      "ms": 126.29999999998836
+    },
+    {
+      "map": "Classic",
+      "algorithm": "BFS",
+      "repeat": 4,
+      "version": "A",
+      "queries": 11025,
+      "ms": 142
+    },
+    {
+      "map": "Classic",
+      "algorithm": "BFS",
+      "repeat": 4,
+      "version": "C",
+      "queries": 11025,
+      "ms": 14.200000000011642
+    },
+    {
+      "map": "Classic",
+      "algorithm": "BFS",
+      "repeat": 4,
+      "version": "B",
+      "queries": 11025,
+      "ms": 127.29999999998836
+    },
+    {
+      "map": "Classic",
+      "algorithm": "BFS",
+      "repeat": 5,
+      "version": "C",
+      "queries": 11025,
+      "ms": 13.800000000017462
+    },
+    {
+      "map": "Classic",
+      "algorithm": "BFS",
+      "repeat": 5,
+      "version": "B",
+      "queries": 11025,
+      "ms": 126.19999999998254
+    },
+    {
+      "map": "Classic",
+      "algorithm": "BFS",
+      "repeat": 5,
+      "version": "A",
+      "queries": 11025,
+      "ms": 132.5
+    },
+    {
+      "map": "Classic",
+      "algorithm": "BFS",
+      "repeat": 6,
+      "version": "B",
+      "queries": 11025,
+      "ms": 126
+    },
+    {
+      "map": "Classic",
+      "algorithm": "BFS",
+      "repeat": 6,
+      "version": "A",
+      "queries": 11025,
+      "ms": 131.60000000000582
+    },
+    {
+      "map": "Classic",
+      "algorithm": "BFS",
+      "repeat": 6,
+      "version": "C",
+      "queries": 11025,
+      "ms": 13.700000000011642
+    },
+    {
+      "map": "Classic",
+      "algorithm": "A*",
+      "repeat": 1,
+      "version": "A",
+      "queries": 11025,
+      "ms": 86
+    },
+    {
+      "map": "Classic",
+      "algorithm": "A*",
+      "repeat": 1,
+      "version": "B",
+      "queries": 11025,
+      "ms": 56.39999999999418
+    },
+    {
+      "map": "Classic",
+      "algorithm": "A*",
+      "repeat": 1,
+      "version": "C",
+      "queries": 11025,
+      "ms": 13.300000000017462
+    },
+    {
+      "map": "Classic",
+      "algorithm": "A*",
+      "repeat": 2,
+      "version": "B",
+      "queries": 11025,
+      "ms": 56.79999999998836
+    },
+    {
+      "map": "Classic",
+      "algorithm": "A*",
+      "repeat": 2,
+      "version": "C",
+      "queries": 11025,
+      "ms": 13.700000000011642
+    },
+    {
+      "map": "Classic",
+      "algorithm": "A*",
+      "repeat": 2,
+      "version": "A",
+      "queries": 11025,
+      "ms": 85.09999999997672
+    },
+    {
+      "map": "Classic",
+      "algorithm": "A*",
+      "repeat": 3,
+      "version": "C",
+      "queries": 11025,
+      "ms": 13.5
+    },
+    {
+      "map": "Classic",
+      "algorithm": "A*",
+      "repeat": 3,
+      "version": "A",
+      "queries": 11025,
+      "ms": 86.30000000001746
+    },
+    {
+      "map": "Classic",
+      "algorithm": "A*",
+      "repeat": 3,
+      "version": "B",
+      "queries": 11025,
+      "ms": 60.5
+    },
+    {
+      "map": "Classic",
+      "algorithm": "A*",
+      "repeat": 4,
+      "version": "A",
+      "queries": 11025,
+      "ms": 88
+    },
+    {
+      "map": "Classic",
+      "algorithm": "A*",
+      "repeat": 4,
+      "version": "C",
+      "queries": 11025,
+      "ms": 13.89999999999418
+    },
+    {
+      "map": "Classic",
+      "algorithm": "A*",
+      "repeat": 4,
+      "version": "B",
+      "queries": 11025,
+      "ms": 59.19999999998254
+    },
+    {
+      "map": "Classic",
+      "algorithm": "A*",
+      "repeat": 5,
+      "version": "C",
+      "queries": 11025,
+      "ms": 14.10000000000582
+    },
+    {
+      "map": "Classic",
+      "algorithm": "A*",
+      "repeat": 5,
+      "version": "B",
+      "queries": 11025,
+      "ms": 59.70000000001164
+    },
+    {
+      "map": "Classic",
+      "algorithm": "A*",
+      "repeat": 5,
+      "version": "A",
+      "queries": 11025,
+      "ms": 92.19999999998254
+    },
+    {
+      "map": "Classic",
+      "algorithm": "A*",
+      "repeat": 6,
+      "version": "B",
+      "queries": 11025,
+      "ms": 67.39999999999418
+    },
+    {
+      "map": "Classic",
+      "algorithm": "A*",
+      "repeat": 6,
+      "version": "A",
+      "queries": 11025,
+      "ms": 90
+    },
+    {
+      "map": "Classic",
+      "algorithm": "A*",
+      "repeat": 6,
+      "version": "C",
+      "queries": 11025,
+      "ms": 14.10000000000582
+    },
+    {
+      "map": "Labyrinth",
+      "algorithm": "BFS",
+      "repeat": 1,
+      "version": "A",
+      "queries": 10201,
+      "ms": 124.40000000002328
+    },
+    {
+      "map": "Labyrinth",
+      "algorithm": "BFS",
+      "repeat": 1,
+      "version": "B",
+      "queries": 10201,
+      "ms": 120.69999999998254
+    },
+    {
+      "map": "Labyrinth",
+      "algorithm": "BFS",
+      "repeat": 1,
+      "version": "C",
+      "queries": 10201,
+      "ms": 18.89999999999418
+    },
+    {
+      "map": "Labyrinth",
+      "algorithm": "BFS",
+      "repeat": 2,
+      "version": "B",
+      "queries": 10201,
+      "ms": 121.40000000002328
+    },
+    {
+      "map": "Labyrinth",
+      "algorithm": "BFS",
+      "repeat": 2,
+      "version": "C",
+      "queries": 10201,
+      "ms": 19.29999999998836
+    },
+    {
+      "map": "Labyrinth",
+      "algorithm": "BFS",
+      "repeat": 2,
+      "version": "A",
+      "queries": 10201,
+      "ms": 122
+    },
+    {
+      "map": "Labyrinth",
+      "algorithm": "BFS",
+      "repeat": 3,
+      "version": "C",
+      "queries": 10201,
+      "ms": 19.60000000000582
+    },
+    {
+      "map": "Labyrinth",
+      "algorithm": "BFS",
+      "repeat": 3,
+      "version": "A",
+      "queries": 10201,
+      "ms": 123.69999999998254
+    },
+    {
+      "map": "Labyrinth",
+      "algorithm": "BFS",
+      "repeat": 3,
+      "version": "B",
+      "queries": 10201,
+      "ms": 120.10000000000582
+    },
+    {
+      "map": "Labyrinth",
+      "algorithm": "BFS",
+      "repeat": 4,
+      "version": "A",
+      "queries": 10201,
+      "ms": 124.29999999998836
+    },
+    {
+      "map": "Labyrinth",
+      "algorithm": "BFS",
+      "repeat": 4,
+      "version": "C",
+      "queries": 10201,
+      "ms": 19.5
+    },
+    {
+      "map": "Labyrinth",
+      "algorithm": "BFS",
+      "repeat": 4,
+      "version": "B",
+      "queries": 10201,
+      "ms": 119.80000000001746
+    },
+    {
+      "map": "Labyrinth",
+      "algorithm": "BFS",
+      "repeat": 5,
+      "version": "C",
+      "queries": 10201,
+      "ms": 19.5
+    },
+    {
+      "map": "Labyrinth",
+      "algorithm": "BFS",
+      "repeat": 5,
+      "version": "B",
+      "queries": 10201,
+      "ms": 120.10000000000582
+    },
+    {
+      "map": "Labyrinth",
+      "algorithm": "BFS",
+      "repeat": 5,
+      "version": "A",
+      "queries": 10201,
+      "ms": 124
+    },
+    {
+      "map": "Labyrinth",
+      "algorithm": "BFS",
+      "repeat": 6,
+      "version": "B",
+      "queries": 10201,
+      "ms": 119.79999999998836
+    },
+    {
+      "map": "Labyrinth",
+      "algorithm": "BFS",
+      "repeat": 6,
+      "version": "A",
+      "queries": 10201,
+      "ms": 123.29999999998836
+    },
+    {
+      "map": "Labyrinth",
+      "algorithm": "BFS",
+      "repeat": 6,
+      "version": "C",
+      "queries": 10201,
+      "ms": 19.400000000023283
+    },
+    {
+      "map": "Labyrinth",
+      "algorithm": "A*",
+      "repeat": 1,
+      "version": "A",
+      "queries": 10201,
+      "ms": 77.29999999998836
+    },
+    {
+      "map": "Labyrinth",
+      "algorithm": "A*",
+      "repeat": 1,
+      "version": "B",
+      "queries": 10201,
+      "ms": 53.39999999999418
+    },
+    {
+      "map": "Labyrinth",
+      "algorithm": "A*",
+      "repeat": 1,
+      "version": "C",
+      "queries": 10201,
+      "ms": 11.800000000017462
+    },
+    {
+      "map": "Labyrinth",
+      "algorithm": "A*",
+      "repeat": 2,
+      "version": "B",
+      "queries": 10201,
+      "ms": 53
+    },
+    {
+      "map": "Labyrinth",
+      "algorithm": "A*",
+      "repeat": 2,
+      "version": "C",
+      "queries": 10201,
+      "ms": 12.10000000000582
+    },
+    {
+      "map": "Labyrinth",
+      "algorithm": "A*",
+      "repeat": 2,
+      "version": "A",
+      "queries": 10201,
+      "ms": 61.59999999997672
+    },
+    {
+      "map": "Labyrinth",
+      "algorithm": "A*",
+      "repeat": 3,
+      "version": "C",
+      "queries": 10201,
+      "ms": 7.400000000023283
+    },
+    {
+      "map": "Labyrinth",
+      "algorithm": "A*",
+      "repeat": 3,
+      "version": "A",
+      "queries": 10201,
+      "ms": 50.39999999999418
+    },
+    {
+      "map": "Labyrinth",
+      "algorithm": "A*",
+      "repeat": 3,
+      "version": "B",
+      "queries": 10201,
+      "ms": 34.19999999998254
+    },
+    {
+      "map": "Labyrinth",
+      "algorithm": "A*",
+      "repeat": 4,
+      "version": "A",
+      "queries": 10201,
+      "ms": 50.80000000001746
+    },
+    {
+      "map": "Labyrinth",
+      "algorithm": "A*",
+      "repeat": 4,
+      "version": "C",
+      "queries": 10201,
+      "ms": 7.600000000005821
+    },
+    {
+      "map": "Labyrinth",
+      "algorithm": "A*",
+      "repeat": 4,
+      "version": "B",
+      "queries": 10201,
+      "ms": 34.29999999998836
+    },
+    {
+      "map": "Labyrinth",
+      "algorithm": "A*",
+      "repeat": 5,
+      "version": "C",
+      "queries": 10201,
+      "ms": 7.399999999994179
+    },
+    {
+      "map": "Labyrinth",
+      "algorithm": "A*",
+      "repeat": 5,
+      "version": "B",
+      "queries": 10201,
+      "ms": 34.30000000001746
+    },
+    {
+      "map": "Labyrinth",
+      "algorithm": "A*",
+      "repeat": 5,
+      "version": "A",
+      "queries": 10201,
+      "ms": 51
+    },
+    {
+      "map": "Labyrinth",
+      "algorithm": "A*",
+      "repeat": 6,
+      "version": "B",
+      "queries": 10201,
+      "ms": 34
+    },
+    {
+      "map": "Labyrinth",
+      "algorithm": "A*",
+      "repeat": 6,
+      "version": "A",
+      "queries": 10201,
+      "ms": 49.89999999999418
+    },
+    {
+      "map": "Labyrinth",
+      "algorithm": "A*",
+      "repeat": 6,
+      "version": "C",
+      "queries": 10201,
+      "ms": 7.2999999999883585
+    },
+    {
+      "map": "Crossroads",
+      "algorithm": "BFS",
+      "repeat": 1,
+      "version": "A",
+      "queries": 12769,
+      "ms": 111.5
+    },
+    {
+      "map": "Crossroads",
+      "algorithm": "BFS",
+      "repeat": 1,
+      "version": "B",
+      "queries": 12769,
+      "ms": 111.69999999998254
+    },
+    {
+      "map": "Crossroads",
+      "algorithm": "BFS",
+      "repeat": 1,
+      "version": "C",
+      "queries": 12769,
+      "ms": 15.5
+    },
+    {
+      "map": "Crossroads",
+      "algorithm": "BFS",
+      "repeat": 2,
+      "version": "B",
+      "queries": 12769,
+      "ms": 107.5
+    },
+    {
+      "map": "Crossroads",
+      "algorithm": "BFS",
+      "repeat": 2,
+      "version": "C",
+      "queries": 12769,
+      "ms": 15.39999999999418
+    },
+    {
+      "map": "Crossroads",
+      "algorithm": "BFS",
+      "repeat": 2,
+      "version": "A",
+      "queries": 12769,
+      "ms": 111
+    },
+    {
+      "map": "Crossroads",
+      "algorithm": "BFS",
+      "repeat": 3,
+      "version": "C",
+      "queries": 12769,
+      "ms": 15.60000000000582
+    },
+    {
+      "map": "Crossroads",
+      "algorithm": "BFS",
+      "repeat": 3,
+      "version": "A",
+      "queries": 12769,
+      "ms": 111.20000000001164
+    },
+    {
+      "map": "Crossroads",
+      "algorithm": "BFS",
+      "repeat": 3,
+      "version": "B",
+      "queries": 12769,
+      "ms": 110.19999999998254
+    },
+    {
+      "map": "Crossroads",
+      "algorithm": "BFS",
+      "repeat": 4,
+      "version": "A",
+      "queries": 12769,
+      "ms": 110.60000000000582
+    },
+    {
+      "map": "Crossroads",
+      "algorithm": "BFS",
+      "repeat": 4,
+      "version": "C",
+      "queries": 12769,
+      "ms": 15.60000000000582
+    },
+    {
+      "map": "Crossroads",
+      "algorithm": "BFS",
+      "repeat": 4,
+      "version": "B",
+      "queries": 12769,
+      "ms": 114.20000000001164
+    },
+    {
+      "map": "Crossroads",
+      "algorithm": "BFS",
+      "repeat": 5,
+      "version": "C",
+      "queries": 12769,
+      "ms": 15.5
+    },
+    {
+      "map": "Crossroads",
+      "algorithm": "BFS",
+      "repeat": 5,
+      "version": "B",
+      "queries": 12769,
+      "ms": 111
+    },
+    {
+      "map": "Crossroads",
+      "algorithm": "BFS",
+      "repeat": 5,
+      "version": "A",
+      "queries": 12769,
+      "ms": 110.79999999998836
+    },
+    {
+      "map": "Crossroads",
+      "algorithm": "BFS",
+      "repeat": 6,
+      "version": "B",
+      "queries": 12769,
+      "ms": 109.60000000000582
+    },
+    {
+      "map": "Crossroads",
+      "algorithm": "BFS",
+      "repeat": 6,
+      "version": "A",
+      "queries": 12769,
+      "ms": 110.5
+    },
+    {
+      "map": "Crossroads",
+      "algorithm": "BFS",
+      "repeat": 6,
+      "version": "C",
+      "queries": 12769,
+      "ms": 15.5
+    },
+    {
+      "map": "Crossroads",
+      "algorithm": "A*",
+      "repeat": 1,
+      "version": "A",
+      "queries": 12769,
+      "ms": 75.40000000002328
+    },
+    {
+      "map": "Crossroads",
+      "algorithm": "A*",
+      "repeat": 1,
+      "version": "B",
+      "queries": 12769,
+      "ms": 47.39999999999418
+    },
+    {
+      "map": "Crossroads",
+      "algorithm": "A*",
+      "repeat": 1,
+      "version": "C",
+      "queries": 12769,
+      "ms": 10.199999999982538
+    },
+    {
+      "map": "Crossroads",
+      "algorithm": "A*",
+      "repeat": 2,
+      "version": "B",
+      "queries": 12769,
+      "ms": 48.80000000001746
+    },
+    {
+      "map": "Crossroads",
+      "algorithm": "A*",
+      "repeat": 2,
+      "version": "C",
+      "queries": 12769,
+      "ms": 12
+    },
+    {
+      "map": "Crossroads",
+      "algorithm": "A*",
+      "repeat": 2,
+      "version": "A",
+      "queries": 12769,
+      "ms": 75.29999999998836
+    },
+    {
+      "map": "Crossroads",
+      "algorithm": "A*",
+      "repeat": 3,
+      "version": "C",
+      "queries": 12769,
+      "ms": 10.39999999999418
+    },
+    {
+      "map": "Crossroads",
+      "algorithm": "A*",
+      "repeat": 3,
+      "version": "A",
+      "queries": 12769,
+      "ms": 75.80000000001746
+    },
+    {
+      "map": "Crossroads",
+      "algorithm": "A*",
+      "repeat": 3,
+      "version": "B",
+      "queries": 12769,
+      "ms": 48.60000000000582
+    },
+    {
+      "map": "Crossroads",
+      "algorithm": "A*",
+      "repeat": 4,
+      "version": "A",
+      "queries": 12769,
+      "ms": 76.39999999999418
+    },
+    {
+      "map": "Crossroads",
+      "algorithm": "A*",
+      "repeat": 4,
+      "version": "C",
+      "queries": 12769,
+      "ms": 10.199999999982538
+    },
+    {
+      "map": "Crossroads",
+      "algorithm": "A*",
+      "repeat": 4,
+      "version": "B",
+      "queries": 12769,
+      "ms": 57
+    },
+    {
+      "map": "Crossroads",
+      "algorithm": "A*",
+      "repeat": 5,
+      "version": "C",
+      "queries": 12769,
+      "ms": 10.5
+    },
+    {
+      "map": "Crossroads",
+      "algorithm": "A*",
+      "repeat": 5,
+      "version": "B",
+      "queries": 12769,
+      "ms": 47.30000000001746
+    },
+    {
+      "map": "Crossroads",
+      "algorithm": "A*",
+      "repeat": 5,
+      "version": "A",
+      "queries": 12769,
+      "ms": 74.89999999999418
+    },
+    {
+      "map": "Crossroads",
+      "algorithm": "A*",
+      "repeat": 6,
+      "version": "B",
+      "queries": 12769,
+      "ms": 47.10000000000582
+    },
+    {
+      "map": "Crossroads",
+      "algorithm": "A*",
+      "repeat": 6,
+      "version": "A",
+      "queries": 12769,
+      "ms": 77
+    },
+    {
+      "map": "Crossroads",
+      "algorithm": "A*",
+      "repeat": 6,
+      "version": "C",
+      "queries": 12769,
+      "ms": 10.799999999988358
+    }
+  ],
+  "preparation": [
+    {
+      "map": "Classic",
+      "repeat": 1,
+      "iterations": 1000,
+      "ms": 14.799999999988358
+    },
+    {
+      "map": "Classic",
+      "repeat": 2,
+      "iterations": 1000,
+      "ms": 11.5
+    },
+    {
+      "map": "Classic",
+      "repeat": 3,
+      "iterations": 1000,
+      "ms": 12.300000000017462
+    },
+    {
+      "map": "Classic",
+      "repeat": 4,
+      "iterations": 1000,
+      "ms": 11.300000000017462
+    },
+    {
+      "map": "Classic",
+      "repeat": 5,
+      "iterations": 1000,
+      "ms": 11.39999999999418
+    },
+    {
+      "map": "Classic",
+      "repeat": 6,
+      "iterations": 1000,
+      "ms": 12.599999999976717
+    },
+    {
+      "map": "Labyrinth",
+      "repeat": 1,
+      "iterations": 1000,
+      "ms": 17
+    },
+    {
+      "map": "Labyrinth",
+      "repeat": 2,
+      "iterations": 1000,
+      "ms": 17.29999999998836
+    },
+    {
+      "map": "Labyrinth",
+      "repeat": 3,
+      "iterations": 1000,
+      "ms": 17.39999999999418
+    },
+    {
+      "map": "Labyrinth",
+      "repeat": 4,
+      "iterations": 1000,
+      "ms": 18.60000000000582
+    },
+    {
+      "map": "Labyrinth",
+      "repeat": 5,
+      "iterations": 1000,
+      "ms": 17.5
+    },
+    {
+      "map": "Labyrinth",
+      "repeat": 6,
+      "iterations": 1000,
+      "ms": 29.89999999999418
+    },
+    {
+      "map": "Crossroads",
+      "repeat": 1,
+      "iterations": 1000,
+      "ms": 10.099999999976717
+    },
+    {
+      "map": "Crossroads",
+      "repeat": 2,
+      "iterations": 1000,
+      "ms": 10.299999999988358
+    },
+    {
+      "map": "Crossroads",
+      "repeat": 3,
+      "iterations": 1000,
+      "ms": 12.89999999999418
+    },
+    {
+      "map": "Crossroads",
+      "repeat": 4,
+      "iterations": 1000,
+      "ms": 15.700000000011642
+    },
+    {
+      "map": "Crossroads",
+      "repeat": 5,
+      "iterations": 1000,
+      "ms": 12.299999999988358
+    },
+    {
+      "map": "Crossroads",
+      "repeat": 6,
+      "iterations": 1000,
+      "ms": 27.39999999999418
+    }
+  ],
+  "chromium": "143.0.7499.4",
+  "platform": "Linux-7.0.0-1017-azure-x86_64-with-glibc2.39",
+  "processor": "x86_64",
+  "commit": "917c8bbc0e7e9baa50498d230ff889221e3c67f3",
+  "summary": [
+    {
+      "map": "Classic",
+      "algorithm": "BFS",
+      "A": {
+        "median_ms": 118.75,
+        "iqr_ms": 40.17500000000291,
+        "min_ms": 85.5,
+        "max_ms": 142
+      },
+      "B": {
+        "median_ms": 126.09999999999127,
+        "iqr_ms": 33.5,
+        "min_ms": 81.60000000000582,
+        "max_ms": 127.29999999998836
+      },
+      "C": {
+        "median_ms": 11.000000000014552,
+        "iqr_ms": 5.55000000000291,
+        "min_ms": 8.199999999982538,
+        "max_ms": 14.200000000011642
+      },
+      "reduction_pct": 90.7368421052509
+    },
+    {
+      "map": "Classic",
+      "algorithm": "A*",
+      "A": {
+        "median_ms": 87.15000000000873,
+        "iqr_ms": 3.4249999999956344,
+        "min_ms": 85.09999999997672,
+        "max_ms": 92.19999999998254
+      },
+      "B": {
+        "median_ms": 59.44999999999709,
+        "iqr_ms": 2.900000000016007,
+        "min_ms": 56.39999999999418,
+        "max_ms": 67.39999999999418
+      },
+      "C": {
+        "median_ms": 13.80000000000291,
+        "iqr_ms": 0.5,
+        "min_ms": 13.300000000017462,
+        "max_ms": 14.10000000000582
+      },
+      "reduction_pct": 84.16523235800169
+    },
+    {
+      "map": "Labyrinth",
+      "algorithm": "BFS",
+      "A": {
+        "median_ms": 123.84999999999127,
+        "iqr_ms": 0.8250000000043656,
+        "min_ms": 122,
+        "max_ms": 124.40000000002328
+      },
+      "B": {
+        "median_ms": 120.10000000000582,
+        "iqr_ms": 0.6749999999738066,
+        "min_ms": 119.79999999998836,
+        "max_ms": 121.40000000002328
+      },
+      "C": {
+        "median_ms": 19.45000000001164,
+        "iqr_ms": 0.17500000000291038,
+        "min_ms": 18.89999999999418,
+        "max_ms": 19.60000000000582
+      },
+      "reduction_pct": 84.29551877269841
+    },
+    {
+      "map": "Labyrinth",
+      "algorithm": "A*",
+      "A": {
+        "median_ms": 50.90000000000873,
+        "iqr_ms": 8.449999999982538,
+        "min_ms": 49.89999999999418,
+        "max_ms": 77.29999999998836
+      },
+      "B": {
+        "median_ms": 34.30000000000291,
+        "iqr_ms": 14.100000000020373,
+        "min_ms": 34,
+        "max_ms": 53.39999999999418
+      },
+      "C": {
+        "median_ms": 7.500000000014552,
+        "iqr_ms": 3.3500000000130967,
+        "min_ms": 7.2999999999883585,
+        "max_ms": 12.10000000000582
+      },
+      "reduction_pct": 85.2652259331763
+    },
+    {
+      "map": "Crossroads",
+      "algorithm": "BFS",
+      "A": {
+        "median_ms": 110.89999999999418,
+        "iqr_ms": 0.500000000007276,
+        "min_ms": 110.5,
+        "max_ms": 111.5
+      },
+      "B": {
+        "median_ms": 110.59999999999127,
+        "iqr_ms": 1.7749999999869033,
+        "min_ms": 107.5,
+        "max_ms": 114.20000000001164
+      },
+      "C": {
+        "median_ms": 15.5,
+        "iqr_ms": 0.07500000000436557,
+        "min_ms": 15.39999999999418,
+        "max_ms": 15.60000000000582
+      },
+      "reduction_pct": 86.02344454463407
+    },
+    {
+      "map": "Crossroads",
+      "algorithm": "A*",
+      "A": {
+        "median_ms": 75.60000000002037,
+        "iqr_ms": 0.9250000000029104,
+        "min_ms": 74.89999999999418,
+        "max_ms": 77
+      },
+      "B": {
+        "median_ms": 48,
+        "iqr_ms": 1.4250000000029104,
+        "min_ms": 47.10000000000582,
+        "max_ms": 57
+      },
+      "C": {
+        "median_ms": 10.44999999999709,
+        "iqr_ms": 0.47500000000582077,
+        "min_ms": 10.199999999982538,
+        "max_ms": 12
+      },
+      "reduction_pct": 86.17724867725624
+    }
+  ],
+  "run_id": 45563335590,
+  "job_id": 139032065815
+}

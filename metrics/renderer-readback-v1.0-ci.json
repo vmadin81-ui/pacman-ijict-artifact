@@ -1,0 +1,452 @@
+{
+  "mode": "readback",
+  "commit": "478e490cf858b23443740aa2f08c68f5d42b9e77",
+  "platform": "Linux-7.0.0-1017-azure-x86_64-with-glibc2.39",
+  "processor": "x86_64",
+  "results": [],
+  "samples": [
+    {
+      "map": "Classic",
+      "mode": "readback",
+      "version": "R0",
+      "repeat": 1,
+      "ms": 76.19999999999709,
+      "frames": 120
+    },
+    {
+      "map": "Classic",
+      "mode": "readback",
+      "version": "R1",
+      "repeat": 1,
+      "ms": 35,
+      "frames": 120
+    },
+    {
+      "map": "Classic",
+      "mode": "readback",
+      "version": "R1",
+      "repeat": 2,
+      "ms": 30.39999999999418,
+      "frames": 120
+    },
+    {
+      "map": "Classic",
+      "mode": "readback",
+      "version": "R0",
+      "repeat": 2,
+      "ms": 63.60000000000582,
+      "frames": 120
+    },
+    {
+      "map": "Classic",
+      "mode": "readback",
+      "version": "R0",
+      "repeat": 3,
+      "ms": 62.30000000000291,
+      "frames": 120
+    },
+    {
+      "map": "Classic",
+      "mode": "readback",
+      "version": "R1",
+      "repeat": 3,
+      "ms": 30.79999999998836,
+      "frames": 120
+    },
+    {
+      "map": "Classic",
+      "mode": "readback",
+      "version": "R1",
+      "repeat": 4,
+      "ms": 30,
+      "frames": 120
+    },
+    {
+      "map": "Classic",
+      "mode": "readback",
+      "version": "R0",
+      "repeat": 4,
+      "ms": 65.69999999999709,
+      "frames": 120
+    },
+    {
+      "map": "Classic",
+      "mode": "readback",
+      "version": "R0",
+      "repeat": 5,
+      "ms": 63.59999999999127,
+      "frames": 120
+    },
+    {
+      "map": "Classic",
+      "mode": "readback",
+      "version": "R1",
+      "repeat": 5,
+      "ms": 29.5,
+      "frames": 120
+    },
+    {
+      "map": "Classic",
+      "mode": "readback",
+      "version": "R1",
+      "repeat": 6,
+      "ms": 29.19999999999709,
+      "frames": 120
+    },
+    {
+      "map": "Classic",
+      "mode": "readback",
+      "version": "R0",
+      "repeat": 6,
+      "ms": 61.60000000000582,
+      "frames": 120
+    },
+    {
+      "map": "Classic",
+      "mode": "readback",
+      "version": "R0",
+      "repeat": 7,
+      "ms": 61.69999999999709,
+      "frames": 120
+    },
+    {
+      "map": "Classic",
+      "mode": "readback",
+      "version": "R1",
+      "repeat": 7,
+      "ms": 28.80000000000291,
+      "frames": 120
+    },
+    {
+      "map": "Classic",
+      "mode": "readback",
+      "version": "R1",
+      "repeat": 8,
+      "ms": 30,
+      "frames": 120
+    },
+    {
+      "map": "Classic",
+      "mode": "readback",
+      "version": "R0",
+      "repeat": 8,
+      "ms": 62,
+      "frames": 120
+    },
+    {
+      "map": "Labyrinth",
+      "mode": "readback",
+      "version": "R0",
+      "repeat": 1,
+      "ms": 61.80000000000291,
+      "frames": 120
+    },
+    {
+      "map": "Labyrinth",
+      "mode": "readback",
+      "version": "R1",
+      "repeat": 1,
+      "ms": 30.29999999998836,
+      "frames": 120
+    },
+    {
+      "map": "Labyrinth",
+      "mode": "readback",
+      "version": "R1",
+      "repeat": 2,
+      "ms": 29.60000000000582,
+      "frames": 120
+    },
+    {
+      "map": "Labyrinth",
+      "mode": "readback",
+      "version": "R0",
+      "repeat": 2,
+      "ms": 58.10000000000582,
+      "frames": 120
+    },
+    {
+      "map": "Labyrinth",
+      "mode": "readback",
+      "version": "R0",
+      "repeat": 3,
+      "ms": 58.19999999999709,
+      "frames": 120
+    },
+    {
+      "map": "Labyrinth",
+      "mode": "readback",
+      "version": "R1",
+      "repeat": 3,
+      "ms": 28.89999999999418,
+      "frames": 120
+    },
+    {
+      "map": "Labyrinth",
+      "mode": "readback",
+      "version": "R1",
+      "repeat": 4,
+      "ms": 29.19999999999709,
+      "frames": 120
+    },
+    {
+      "map": "Labyrinth",
+      "mode": "readback",
+      "version": "R0",
+      "repeat": 4,
+      "ms": 60,
+      "frames": 120
+    },
+    {
+      "map": "Labyrinth",
+      "mode": "readback",
+      "version": "R0",
+      "repeat": 5,
+      "ms": 57.10000000000582,
+      "frames": 120
+    },
+    {
+      "map": "Labyrinth",
+      "mode": "readback",
+      "version": "R1",
+      "repeat": 5,
+      "ms": 28.69999999999709,
+      "frames": 120
+    },
+    {
+      "map": "Labyrinth",
+      "mode": "readback",
+      "version": "R1",
+      "repeat": 6,
+      "ms": 28.5,
+      "frames": 120
+    },
+    {
+      "map": "Labyrinth",
+      "mode": "readback",
+      "version": "R0",
+      "repeat": 6,
+      "ms": 56.90000000000873,
+      "frames": 120
+    },
+    {
+      "map": "Labyrinth",
+      "mode": "readback",
+      "version": "R0",
+      "repeat": 7,
+      "ms": 57,
+      "frames": 120
+    },
+    {
+      "map": "Labyrinth",
+      "mode": "readback",
+      "version": "R1",
+      "repeat": 7,
+      "ms": 30.39999999999418,
+      "frames": 120
+    },
+    {
+      "map": "Labyrinth",
+      "mode": "readback",
+      "version": "R1",
+      "repeat": 8,
+      "ms": 28.30000000000291,
+      "frames": 120
+    },
+    {
+      "map": "Labyrinth",
+      "mode": "readback",
+      "version": "R0",
+      "repeat": 8,
+      "ms": 56.10000000000582,
+      "frames": 120
+    },
+    {
+      "map": "Crossroads",
+      "mode": "readback",
+      "version": "R0",
+      "repeat": 1,
+      "ms": 76.90000000000873,
+      "frames": 120
+    },
+    {
+      "map": "Crossroads",
+      "mode": "readback",
+      "version": "R1",
+      "repeat": 1,
+      "ms": 35.09999999999127,
+      "frames": 120
+    },
+    {
+      "map": "Crossroads",
+      "mode": "readback",
+      "version": "R1",
+      "repeat": 2,
+      "ms": 32.09999999999127,
+      "frames": 120
+    },
+    {
+      "map": "Crossroads",
+      "mode": "readback",
+      "version": "R0",
+      "repeat": 2,
+      "ms": 69.79999999998836,
+      "frames": 120
+    },
+    {
+      "map": "Crossroads",
+      "mode": "readback",
+      "version": "R0",
+      "repeat": 3,
+      "ms": 69.69999999999709,
+      "frames": 120
+    },
+    {
+      "map": "Crossroads",
+      "mode": "readback",
+      "version": "R1",
+      "repeat": 3,
+      "ms": 36.40000000000873,
+      "frames": 120
+    },
+    {
+      "map": "Crossroads",
+      "mode": "readback",
+      "version": "R1",
+      "repeat": 4,
+      "ms": 31.69999999999709,
+      "frames": 120
+    },
+    {
+      "map": "Crossroads",
+      "mode": "readback",
+      "version": "R0",
+      "repeat": 4,
+      "ms": 70.29999999998836,
+      "frames": 120
+    },
+    {
+      "map": "Crossroads",
+      "mode": "readback",
+      "version": "R0",
+      "repeat": 5,
+      "ms": 69.39999999999418,
+      "frames": 120
+    },
+    {
+      "map": "Crossroads",
+      "mode": "readback",
+      "version": "R1",
+      "repeat": 5,
+      "ms": 31,
+      "frames": 120
+    },
+    {
+      "map": "Crossroads",
+      "mode": "readback",
+      "version": "R1",
+      "repeat": 6,
+      "ms": 30.80000000000291,
+      "frames": 120
+    },
+    {
+      "map": "Crossroads",
+      "mode": "readback",
+      "version": "R0",
+      "repeat": 6,
+      "ms": 70.5,
+      "frames": 120
+    },
+    {
+      "map": "Crossroads",
+      "mode": "readback",
+      "version": "R0",
+      "repeat": 7,
+      "ms": 69.30000000000291,
+      "frames": 120
+    },
+    {
+      "map": "Crossroads",
+      "mode": "readback",
+      "version": "R1",
+      "repeat": 7,
+      "ms": 31.10000000000582,
+      "frames": 120
+    },
+    {
+      "map": "Crossroads",
+      "mode": "readback",
+      "version": "R1",
+      "repeat": 8,
+      "ms": 30.89999999999418,
+      "frames": 120
+    },
+    {
+      "map": "Crossroads",
+      "mode": "readback",
+      "version": "R0",
+      "repeat": 8,
+      "ms": 68.90000000000873,
+      "frames": 120
+    }
+  ],
+  "prep": [],
+  "counts": [],
+  "summary": [
+    {
+      "map": "Classic",
+      "mode": "readback",
+      "R0": {
+        "median_ms_per_frame": 0.524583333333309,
+        "iqr": 0.018333333333369617,
+        "min": 0.5133333333333818,
+        "max": 0.6349999999999757
+      },
+      "R1": {
+        "median_ms_per_frame": 0.25,
+        "iqr": 0.008958333333278778,
+        "min": 0.24000000000002425,
+        "max": 0.2916666666666667
+      },
+      "reduction_pct": 52.3431294678294
+    },
+    {
+      "map": "Labyrinth",
+      "mode": "readback",
+      "R0": {
+        "median_ms_per_frame": 0.4800000000000485,
+        "iqr": 0.01395833333329699,
+        "min": 0.4675000000000485,
+        "max": 0.5150000000000242
+      },
+      "R1": {
+        "median_ms_per_frame": 0.24208333333329696,
+        "iqr": 0.009375000000030276,
+        "min": 0.2358333333333576,
+        "max": 0.25333333333328484
+      },
+      "reduction_pct": 49.5659722222349
+    },
+    {
+      "map": "Crossroads",
+      "mode": "readback",
+      "R0": {
+        "median_ms_per_frame": 0.5812499999999394,
+        "iqr": 0.008124999999957527,
+        "min": 0.5741666666667394,
+        "max": 0.6408333333334061
+      },
+      "R1": {
+        "median_ms_per_frame": 0.2616666666666788,
+        "iqr": 0.015624999999939326,
+        "min": 0.2566666666666909,
+        "max": 0.3033333333334061
+      },
+      "reduction_pct": 54.98207885303981
+    }
+  ],
+  "complete": true,
+  "chromium": "143.0.7499.4",
+  "run_id": 45590535412,
+  "job_id": 139123276375
+}

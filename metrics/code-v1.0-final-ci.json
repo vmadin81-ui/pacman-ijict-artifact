@@ -1,0 +1,151 @@
+{
+  "run_id": 45596480043,
+  "job_id": 139143889996,
+  "source_blob": "57b3cee62c16b623b124cd3983af63c941e24eaa",
+  "results": [
+    {
+      "file": "pacman_v0.06.html",
+      "htmlLines": 380,
+      "jsLines": 353,
+      "jsNonblankLines": 287,
+      "classes": 2,
+      "globalBindings": 19,
+      "functions": 16,
+      "meanFunctionLines": 19.56,
+      "complexityProxy": 92,
+      "syntaxDiagnostics": 0
+    },
+    {
+      "file": "pacman_v0.07.html",
+      "htmlLines": 225,
+      "jsLines": 204,
+      "jsNonblankLines": 203,
+      "classes": 2,
+      "globalBindings": 22,
+      "functions": 30,
+      "meanFunctionLines": 6.17,
+      "complexityProxy": 72,
+      "syntaxDiagnostics": 0
+    },
+    {
+      "file": "pacman_v0.08.html",
+      "htmlLines": 219,
+      "jsLines": 198,
+      "jsNonblankLines": 197,
+      "classes": 2,
+      "globalBindings": 25,
+      "functions": 28,
+      "meanFunctionLines": 5.68,
+      "complexityProxy": 64,
+      "syntaxDiagnostics": 0
+    },
+    {
+      "file": "pacman_v0.08.1.html",
+      "htmlLines": 341,
+      "jsLines": 320,
+      "jsNonblankLines": 285,
+      "classes": 9,
+      "globalBindings": 5,
+      "functions": 41,
+      "meanFunctionLines": 5.88,
+      "complexityProxy": 78,
+      "syntaxDiagnostics": 0
+    },
+    {
+      "file": "pacman_v0.09.html",
+      "htmlLines": 432,
+      "jsLines": 410,
+      "jsNonblankLines": 368,
+      "classes": 13,
+      "globalBindings": 5,
+      "functions": 52,
+      "meanFunctionLines": 6.15,
+      "complexityProxy": 110,
+      "syntaxDiagnostics": 0
+    },
+    {
+      "file": "pacman_v0.10.html",
+      "htmlLines": 583,
+      "jsLines": 560,
+      "jsNonblankLines": 509,
+      "classes": 14,
+      "globalBindings": 7,
+      "functions": 65,
+      "meanFunctionLines": 6.91,
+      "complexityProxy": 166,
+      "syntaxDiagnostics": 0
+    },
+    {
+      "file": "pacman_v0.11.html",
+      "htmlLines": 720,
+      "jsLines": 671,
+      "jsNonblankLines": 614,
+      "classes": 14,
+      "globalBindings": 7,
+      "functions": 74,
+      "meanFunctionLines": 7.58,
+      "complexityProxy": 201,
+      "syntaxDiagnostics": 0
+    },
+    {
+      "file": "pacman_v0.11.1.html",
+      "htmlLines": 762,
+      "jsLines": 713,
+      "jsNonblankLines": 656,
+      "classes": 15,
+      "globalBindings": 7,
+      "functions": 79,
+      "meanFunctionLines": 7.62,
+      "complexityProxy": 222,
+      "syntaxDiagnostics": 0
+    },
+    {
+      "file": "pacman_v0.12.0.html",
+      "htmlLines": 849,
+      "jsLines": 800,
+      "jsNonblankLines": 738,
+      "classes": 18,
+      "globalBindings": 7,
+      "functions": 91,
+      "meanFunctionLines": 7.48,
+      "complexityProxy": 251,
+      "syntaxDiagnostics": 0
+    },
+    {
+      "file": "pacman_v0.12.1.html",
+      "htmlLines": 998,
+      "jsLines": 946,
+      "jsNonblankLines": 875,
+      "classes": 19,
+      "globalBindings": 8,
+      "functions": 104,
+      "meanFunctionLines": 7.99,
+      "complexityProxy": 298,
+      "syntaxDiagnostics": 0
+    },
+    {
+      "file": "pacman_v0.12.2.html",
+      "htmlLines": 1157,
+      "jsLines": 1092,
+      "jsNonblankLines": 1010,
+      "classes": 20,
+      "globalBindings": 11,
+      "functions": 122,
+      "meanFunctionLines": 8.07,
+      "complexityProxy": 370,
+      "syntaxDiagnostics": 0
+    },
+    {
+      "file": "pacman_v1.0.html",
+      "htmlLines": 1275,
+      "jsLines": 1210,
+      "jsNonblankLines": 1122,
+      "classes": 22,
+      "globalBindings": 11,
+      "functions": 131,
+      "meanFunctionLines": 8.31,
+      "complexityProxy": 413,
+      "syntaxDiagnostics": 0
+    }
+  ]
+}

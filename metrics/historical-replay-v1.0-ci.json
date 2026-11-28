@@ -1,0 +1,115 @@
+{
+  "checks": [
+    {
+      "tool": "balance_v010.cjs",
+      "archives": [
+        "balance-v0.10.json"
+      ],
+      "rows": 80,
+      "steps": 174863,
+      "matched": true
+    },
+    {
+      "tool": "balance_v0111.cjs",
+      "archives": [
+        "balance-v0.11.1.json"
+      ],
+      "rows": 240,
+      "steps": 672645,
+      "matched": true
+    },
+    {
+      "tool": "balance_expert_repeat.cjs",
+      "archives": [
+        "balance-expert-repeat-v0.11.1.json"
+      ],
+      "rows": 90,
+      "steps": 202267,
+      "matched": true
+    },
+    {
+      "tool": "balance_expert_sweep.cjs",
+      "archives": [
+        "balance-expert-sweep-v0.11.1.json"
+      ],
+      "rows": 180,
+      "steps": 441543,
+      "matched": true
+    },
+    {
+      "tool": "balance_expert_validation.cjs",
+      "archives": [
+        "balance-expert-validation-v0.11.1.json"
+      ],
+      "rows": 450,
+      "steps": 1073222,
+      "matched": true
+    },
+    {
+      "tool": "balance_levels_v0111.cjs",
+      "archives": [
+        "balance-levels-v0.11.1.json"
+      ],
+      "rows": 600,
+      "steps": 1996473,
+      "matched": true
+    },
+    {
+      "tool": "test_campaign.cjs",
+      "archives": [
+        "campaign-v0.12.0.json"
+      ],
+      "rows": 240,
+      "steps": 1702392,
+      "matched": true
+    },
+    {
+      "tool": "balance_maps_v0120.cjs",
+      "archives": [
+        "map-classic-v0.12.0.json",
+        "map-crossroads-v0.12.0.json",
+        "map-labyrinth-v0.12.0.json"
+      ],
+      "rows": 1800,
+      "steps": 6275686,
+      "matched": true
+    },
+    {
+      "tool": "balance_campaign_order_v0120.cjs",
+      "archives": [
+        "campaign-order-a-v0.12.0.json",
+        "campaign-order-b-v0.12.0.json",
+        "campaign-order-c-v0.12.0.json"
+      ],
+      "rows": 1800,
+      "steps": 13142181,
+      "matched": true
+    },
+    {
+      "tool": "audio_regression_v0121.cjs",
+      "archives": [
+        "audio-regression-v0.12.1.json"
+      ],
+      "pairs": 120,
+      "stepsPerVersion": 883059,
+      "matched": true,
+      "comparison": "exact paired records within runner; archived counts and steps"
+    },
+    {
+      "tool": "records_regression_v0122.cjs",
+      "archives": [
+        "records-regression-v0.12.2.json"
+      ],
+      "pairs": 120,
+      "stepsPerVersion": 913959,
+      "matched": true,
+      "comparison": "exact paired records within runner; archived counts and steps"
+    }
+  ],
+  "complete": true,
+  "run_id": 45603907431,
+  "job_id": 139169654776,
+  "commit": "65cd9cd093a8d3b28196eeb5f1e3dca99d251f0f",
+  "sessions": 5960,
+  "steps": 29275308
+}

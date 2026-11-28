@@ -1,0 +1,152 @@
+{
+  "baseline": "34e0211924a83d94719448247fe8490dab66ace4",
+  "candidate": "f9bd03a36841f8319b207cf76e0f33c20fda6059",
+  "seedRange": [
+    900,
+    949
+  ],
+  "stepLimit": 30000,
+  "environment": "V8 DOM/Canvas stubs, no audio or localStorage",
+  "comparison": "Exact JSON equality of recorded campaign outcomes, stage entries/exits and transitions, not full tick traces",
+  "rows": [
+    {
+      "level": "easy",
+      "pairs": 150,
+      "steps": 1612578,
+      "wins": 90,
+      "losses": 57,
+      "censored": 3,
+      "transitions": 202,
+      "policies": [
+        {
+          "mode": "random",
+          "wins": 0,
+          "losses": 47,
+          "censored": 3,
+          "steps": 674519
+        },
+        {
+          "mode": "nearest",
+          "wins": 40,
+          "losses": 10,
+          "censored": 0,
+          "steps": 445849
+        },
+        {
+          "mode": "smart",
+          "wins": 50,
+          "losses": 0,
+          "censored": 0,
+          "steps": 492210
+        }
+      ]
+    },
+    {
+      "level": "normal",
+      "pairs": 150,
+      "steps": 1091784,
+      "wins": 67,
+      "losses": 83,
+      "censored": 0,
+      "transitions": 182,
+      "policies": [
+        {
+          "mode": "random",
+          "wins": 0,
+          "losses": 50,
+          "censored": 0,
+          "steps": 215882
+        },
+        {
+          "mode": "nearest",
+          "wins": 17,
+          "losses": 33,
+          "censored": 0,
+          "steps": 367972
+        },
+        {
+          "mode": "smart",
+          "wins": 50,
+          "losses": 0,
+          "censored": 0,
+          "steps": 507930
+        }
+      ]
+    },
+    {
+      "level": "hard",
+      "pairs": 150,
+      "steps": 854493,
+      "wins": 52,
+      "losses": 98,
+      "censored": 0,
+      "transitions": 149,
+      "policies": [
+        {
+          "mode": "random",
+          "wins": 0,
+          "losses": 50,
+          "censored": 0,
+          "steps": 96976
+        },
+        {
+          "mode": "nearest",
+          "wins": 2,
+          "losses": 48,
+          "censored": 0,
+          "steps": 234757
+        },
+        {
+          "mode": "smart",
+          "wins": 50,
+          "losses": 0,
+          "censored": 0,
+          "steps": 522760
+        }
+      ]
+    },
+    {
+      "level": "expert",
+      "pairs": 150,
+      "steps": 705997,
+      "wins": 37,
+      "losses": 113,
+      "censored": 0,
+      "transitions": 105,
+      "policies": [
+        {
+          "mode": "random",
+          "wins": 0,
+          "losses": 50,
+          "censored": 0,
+          "steps": 54136
+        },
+        {
+          "mode": "nearest",
+          "wins": 0,
+          "losses": 50,
+          "censored": 0,
+          "steps": 146253
+        },
+        {
+          "mode": "smart",
+          "wins": 37,
+          "losses": 13,
+          "censored": 0,
+          "steps": 505608
+        }
+      ]
+    }
+  ],
+  "totals": {
+    "pairs": 600,
+    "steps": 4264852,
+    "wins": 246,
+    "losses": 351,
+    "censored": 3,
+    "transitions": 638
+  },
+  "sessions": 1200,
+  "stepsBoth": 8529704,
+  "matched": 600
+}

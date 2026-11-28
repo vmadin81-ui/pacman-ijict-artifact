@@ -1,0 +1,121 @@
+{
+  "source": "versions/pacman_v1.0.html",
+  "sha256": "171e3d5ccaea9747c90a291a0da95731c6b25431dd82b076ec51496a83e60c34",
+  "commit": "2ec90c71652eed854c145270a8c7be92b7af209e",
+  "checks": {
+    "native_context": true,
+    "native_voices": true,
+    "mute_stops": true,
+    "mute_blocks": true,
+    "volume": true,
+    "zero_volume": true,
+    "voice_cap": true,
+    "cleanup": true,
+    "missing_context": true,
+    "factory_failure": true,
+    "resume_failure": true,
+    "power_event": true,
+    "capture_event": true,
+    "life_event": true,
+    "pellet_event": true,
+    "clear_event": true,
+    "victory_event": true,
+    "defeat_event": true,
+    "pause_stops": true,
+    "persistence_reload": true,
+    "top10": true,
+    "strategy_partition": true,
+    "difficulty_partition": true,
+    "tie_order": true,
+    "invalid_records": true,
+    "settings_validation": true,
+    "corrupt_json": true,
+    "read_failure": true,
+    "write_failure": true,
+    "pause_time": true,
+    "stop_no_record": true,
+    "defeat_record": true,
+    "no_duplicate": true,
+    "no_intermediate_0": true,
+    "no_intermediate_1": true,
+    "victory_record": true,
+    "campaign_ticks": true,
+    "safe_record_text": true,
+    "mobile_width": true,
+    "canonical_seed": true,
+    "blank_seed": true,
+    "native_cache": true,
+    "cache_switch": true,
+    "cache_fallback": true,
+    "concurrent_audio": true,
+    "malformed_storage": true,
+    "ui_controls": true
+  },
+  "regression": [
+    {
+      "level": "easy",
+      "seed": 42,
+      "matchedSteps": 5000
+    },
+    {
+      "level": "easy",
+      "seed": 7,
+      "matchedSteps": 5000
+    },
+    {
+      "level": "easy",
+      "seed": 2026,
+      "matchedSteps": 5000
+    },
+    {
+      "level": "normal",
+      "seed": 42,
+      "matchedSteps": 4185
+    },
+    {
+      "level": "normal",
+      "seed": 7,
+      "matchedSteps": 5000
+    },
+    {
+      "level": "normal",
+      "seed": 2026,
+      "matchedSteps": 4226
+    },
+    {
+      "level": "hard",
+      "seed": 42,
+      "matchedSteps": 1656
+    },
+    {
+      "level": "hard",
+      "seed": 7,
+      "matchedSteps": 1709
+    },
+    {
+      "level": "hard",
+      "seed": 2026,
+      "matchedSteps": 1512
+    },
+    {
+      "level": "expert",
+      "seed": 42,
+      "matchedSteps": 937
+    },
+    {
+      "level": "expert",
+      "seed": 7,
+      "matchedSteps": 1937
+    },
+    {
+      "level": "expert",
+      "seed": 2026,
+      "matchedSteps": 902
+    }
+  ],
+  "errors": [],
+  "complete": true,
+  "chromium": "143.0.7499.4",
+  "run_id": 45597876132,
+  "job_id": 139148700354
+}

@@ -1,0 +1,993 @@
+{
+  "mode": "submit",
+  "commit": "e5445af14c8b3adfab1fe6bee0cf407cd8d7cf36",
+  "platform": "Linux-7.0.0-1017-azure-x86_64-with-glibc2.39",
+  "processor": "x86_64",
+  "results": [],
+  "samples": [
+    {
+      "map": "Classic",
+      "mode": "submit",
+      "version": "R0",
+      "repeat": 1,
+      "ms": 8,
+      "frames": 120
+    },
+    {
+      "map": "Classic",
+      "mode": "submit",
+      "version": "R1",
+      "repeat": 1,
+      "ms": 4.099999999998545,
+      "frames": 120
+    },
+    {
+      "map": "Classic",
+      "mode": "submit",
+      "version": "R2",
+      "repeat": 1,
+      "ms": 6,
+      "frames": 120
+    },
+    {
+      "map": "Classic",
+      "mode": "submit",
+      "version": "R3",
+      "repeat": 1,
+      "ms": 5.799999999995634,
+      "frames": 120
+    },
+    {
+      "map": "Classic",
+      "mode": "submit",
+      "version": "R1",
+      "repeat": 2,
+      "ms": 13.19999999999709,
+      "frames": 120
+    },
+    {
+      "map": "Classic",
+      "mode": "submit",
+      "version": "R2",
+      "repeat": 2,
+      "ms": 5.5,
+      "frames": 120
+    },
+    {
+      "map": "Classic",
+      "mode": "submit",
+      "version": "R3",
+      "repeat": 2,
+      "ms": 5.799999999995634,
+      "frames": 120
+    },
+    {
+      "map": "Classic",
+      "mode": "submit",
+      "version": "R0",
+      "repeat": 2,
+      "ms": 6.900000000001455,
+      "frames": 120
+    },
+    {
+      "map": "Classic",
+      "mode": "submit",
+      "version": "R2",
+      "repeat": 3,
+      "ms": 5,
+      "frames": 120
+    },
+    {
+      "map": "Classic",
+      "mode": "submit",
+      "version": "R3",
+      "repeat": 3,
+      "ms": 4.80000000000291,
+      "frames": 120
+    },
+    {
+      "map": "Classic",
+      "mode": "submit",
+      "version": "R0",
+      "repeat": 3,
+      "ms": 6.69999999999709,
+      "frames": 120
+    },
+    {
+      "map": "Classic",
+      "mode": "submit",
+      "version": "R1",
+      "repeat": 3,
+      "ms": 3.5,
+      "frames": 120
+    },
+    {
+      "map": "Classic",
+      "mode": "submit",
+      "version": "R3",
+      "repeat": 4,
+      "ms": 5,
+      "frames": 120
+    },
+    {
+      "map": "Classic",
+      "mode": "submit",
+      "version": "R0",
+      "repeat": 4,
+      "ms": 6.599999999998545,
+      "frames": 120
+    },
+    {
+      "map": "Classic",
+      "mode": "submit",
+      "version": "R1",
+      "repeat": 4,
+      "ms": 3.2999999999956344,
+      "frames": 120
+    },
+    {
+      "map": "Classic",
+      "mode": "submit",
+      "version": "R2",
+      "repeat": 4,
+      "ms": 5.30000000000291,
+      "frames": 120
+    },
+    {
+      "map": "Classic",
+      "mode": "submit",
+      "version": "R3",
+      "repeat": 5,
+      "ms": 6.799999999995634,
+      "frames": 120
+    },
+    {
+      "map": "Classic",
+      "mode": "submit",
+      "version": "R2",
+      "repeat": 5,
+      "ms": 8.299999999995634,
+      "frames": 120
+    },
+    {
+      "map": "Classic",
+      "mode": "submit",
+      "version": "R1",
+      "repeat": 5,
+      "ms": 3.8000000000029104,
+      "frames": 120
+    },
+    {
+      "map": "Classic",
+      "mode": "submit",
+      "version": "R0",
+      "repeat": 5,
+      "ms": 6.600000000005821,
+      "frames": 120
+    },
+    {
+      "map": "Classic",
+      "mode": "submit",
+      "version": "R2",
+      "repeat": 6,
+      "ms": 4.5,
+      "frames": 120
+    },
+    {
+      "map": "Classic",
+      "mode": "submit",
+      "version": "R1",
+      "repeat": 6,
+      "ms": 3.5,
+      "frames": 120
+    },
+    {
+      "map": "Classic",
+      "mode": "submit",
+      "version": "R0",
+      "repeat": 6,
+      "ms": 6.400000000001455,
+      "frames": 120
+    },
+    {
+      "map": "Classic",
+      "mode": "submit",
+      "version": "R3",
+      "repeat": 6,
+      "ms": 4.5,
+      "frames": 120
+    },
+    {
+      "map": "Classic",
+      "mode": "submit",
+      "version": "R1",
+      "repeat": 7,
+      "ms": 3.400000000001455,
+      "frames": 120
+    },
+    {
+      "map": "Classic",
+      "mode": "submit",
+      "version": "R0",
+      "repeat": 7,
+      "ms": 6.19999999999709,
+      "frames": 120
+    },
+    {
+      "map": "Classic",
+      "mode": "submit",
+      "version": "R3",
+      "repeat": 7,
+      "ms": 4.5,
+      "frames": 120
+    },
+    {
+      "map": "Classic",
+      "mode": "submit",
+      "version": "R2",
+      "repeat": 7,
+      "ms": 4.80000000000291,
+      "frames": 120
+    },
+    {
+      "map": "Classic",
+      "mode": "submit",
+      "version": "R0",
+      "repeat": 8,
+      "ms": 6.299999999995634,
+      "frames": 120
+    },
+    {
+      "map": "Classic",
+      "mode": "submit",
+      "version": "R3",
+      "repeat": 8,
+      "ms": 4.400000000001455,
+      "frames": 120
+    },
+    {
+      "map": "Classic",
+      "mode": "submit",
+      "version": "R2",
+      "repeat": 8,
+      "ms": 4.799999999995634,
+      "frames": 120
+    },
+    {
+      "map": "Classic",
+      "mode": "submit",
+      "version": "R1",
+      "repeat": 8,
+      "ms": 3.2999999999956344,
+      "frames": 120
+    },
+    {
+      "map": "Labyrinth",
+      "mode": "submit",
+      "version": "R0",
+      "repeat": 1,
+      "ms": 7.69999999999709,
+      "frames": 120
+    },
+    {
+      "map": "Labyrinth",
+      "mode": "submit",
+      "version": "R1",
+      "repeat": 1,
+      "ms": 4.099999999998545,
+      "frames": 120
+    },
+    {
+      "map": "Labyrinth",
+      "mode": "submit",
+      "version": "R2",
+      "repeat": 1,
+      "ms": 6,
+      "frames": 120
+    },
+    {
+      "map": "Labyrinth",
+      "mode": "submit",
+      "version": "R3",
+      "repeat": 1,
+      "ms": 5.19999999999709,
+      "frames": 120
+    },
+    {
+      "map": "Labyrinth",
+      "mode": "submit",
+      "version": "R1",
+      "repeat": 2,
+      "ms": 4,
+      "frames": 120
+    },
+    {
+      "map": "Labyrinth",
+      "mode": "submit",
+      "version": "R2",
+      "repeat": 2,
+      "ms": 5.799999999995634,
+      "frames": 120
+    },
+    {
+      "map": "Labyrinth",
+      "mode": "submit",
+      "version": "R3",
+      "repeat": 2,
+      "ms": 5.900000000001455,
+      "frames": 120
+    },
+    {
+      "map": "Labyrinth",
+      "mode": "submit",
+      "version": "R0",
+      "repeat": 2,
+      "ms": 7.5,
+      "frames": 120
+    },
+    {
+      "map": "Labyrinth",
+      "mode": "submit",
+      "version": "R2",
+      "repeat": 3,
+      "ms": 4.80000000000291,
+      "frames": 120
+    },
+    {
+      "map": "Labyrinth",
+      "mode": "submit",
+      "version": "R3",
+      "repeat": 3,
+      "ms": 5,
+      "frames": 120
+    },
+    {
+      "map": "Labyrinth",
+      "mode": "submit",
+      "version": "R0",
+      "repeat": 3,
+      "ms": 6.100000000005821,
+      "frames": 120
+    },
+    {
+      "map": "Labyrinth",
+      "mode": "submit",
+      "version": "R1",
+      "repeat": 3,
+      "ms": 3.5,
+      "frames": 120
+    },
+    {
+      "map": "Labyrinth",
+      "mode": "submit",
+      "version": "R3",
+      "repeat": 4,
+      "ms": 4.900000000001455,
+      "frames": 120
+    },
+    {
+      "map": "Labyrinth",
+      "mode": "submit",
+      "version": "R0",
+      "repeat": 4,
+      "ms": 6.400000000001455,
+      "frames": 120
+    },
+    {
+      "map": "Labyrinth",
+      "mode": "submit",
+      "version": "R1",
+      "repeat": 4,
+      "ms": 3.2999999999956344,
+      "frames": 120
+    },
+    {
+      "map": "Labyrinth",
+      "mode": "submit",
+      "version": "R2",
+      "repeat": 4,
+      "ms": 5,
+      "frames": 120
+    },
+    {
+      "map": "Labyrinth",
+      "mode": "submit",
+      "version": "R3",
+      "repeat": 5,
+      "ms": 5.700000000004366,
+      "frames": 120
+    },
+    {
+      "map": "Labyrinth",
+      "mode": "submit",
+      "version": "R2",
+      "repeat": 5,
+      "ms": 6.900000000001455,
+      "frames": 120
+    },
+    {
+      "map": "Labyrinth",
+      "mode": "submit",
+      "version": "R1",
+      "repeat": 5,
+      "ms": 4,
+      "frames": 120
+    },
+    {
+      "map": "Labyrinth",
+      "mode": "submit",
+      "version": "R0",
+      "repeat": 5,
+      "ms": 6.400000000001455,
+      "frames": 120
+    },
+    {
+      "map": "Labyrinth",
+      "mode": "submit",
+      "version": "R2",
+      "repeat": 6,
+      "ms": 4.30000000000291,
+      "frames": 120
+    },
+    {
+      "map": "Labyrinth",
+      "mode": "submit",
+      "version": "R1",
+      "repeat": 6,
+      "ms": 3.5,
+      "frames": 120
+    },
+    {
+      "map": "Labyrinth",
+      "mode": "submit",
+      "version": "R0",
+      "repeat": 6,
+      "ms": 6,
+      "frames": 120
+    },
+    {
+      "map": "Labyrinth",
+      "mode": "submit",
+      "version": "R3",
+      "repeat": 6,
+      "ms": 3.900000000001455,
+      "frames": 120
+    },
+    {
+      "map": "Labyrinth",
+      "mode": "submit",
+      "version": "R1",
+      "repeat": 7,
+      "ms": 3.1999999999970896,
+      "frames": 120
+    },
+    {
+      "map": "Labyrinth",
+      "mode": "submit",
+      "version": "R0",
+      "repeat": 7,
+      "ms": 5.799999999995634,
+      "frames": 120
+    },
+    {
+      "map": "Labyrinth",
+      "mode": "submit",
+      "version": "R3",
+      "repeat": 7,
+      "ms": 4.099999999998545,
+      "frames": 120
+    },
+    {
+      "map": "Labyrinth",
+      "mode": "submit",
+      "version": "R2",
+      "repeat": 7,
+      "ms": 4.200000000004366,
+      "frames": 120
+    },
+    {
+      "map": "Labyrinth",
+      "mode": "submit",
+      "version": "R0",
+      "repeat": 8,
+      "ms": 5.900000000001455,
+      "frames": 120
+    },
+    {
+      "map": "Labyrinth",
+      "mode": "submit",
+      "version": "R3",
+      "repeat": 8,
+      "ms": 4.30000000000291,
+      "frames": 120
+    },
+    {
+      "map": "Labyrinth",
+      "mode": "submit",
+      "version": "R2",
+      "repeat": 8,
+      "ms": 4.099999999998545,
+      "frames": 120
+    },
+    {
+      "map": "Labyrinth",
+      "mode": "submit",
+      "version": "R1",
+      "repeat": 8,
+      "ms": 30,
+      "frames": 120
+    },
+    {
+      "map": "Crossroads",
+      "mode": "submit",
+      "version": "R0",
+      "repeat": 1,
+      "ms": 9.30000000000291,
+      "frames": 120
+    },
+    {
+      "map": "Crossroads",
+      "mode": "submit",
+      "version": "R1",
+      "repeat": 1,
+      "ms": 4.299999999995634,
+      "frames": 120
+    },
+    {
+      "map": "Crossroads",
+      "mode": "submit",
+      "version": "R2",
+      "repeat": 1,
+      "ms": 6.099999999998545,
+      "frames": 120
+    },
+    {
+      "map": "Crossroads",
+      "mode": "submit",
+      "version": "R3",
+      "repeat": 1,
+      "ms": 5.700000000004366,
+      "frames": 120
+    },
+    {
+      "map": "Crossroads",
+      "mode": "submit",
+      "version": "R1",
+      "repeat": 2,
+      "ms": 4.099999999998545,
+      "frames": 120
+    },
+    {
+      "map": "Crossroads",
+      "mode": "submit",
+      "version": "R2",
+      "repeat": 2,
+      "ms": 6.200000000004366,
+      "frames": 120
+    },
+    {
+      "map": "Crossroads",
+      "mode": "submit",
+      "version": "R3",
+      "repeat": 2,
+      "ms": 6.5,
+      "frames": 120
+    },
+    {
+      "map": "Crossroads",
+      "mode": "submit",
+      "version": "R0",
+      "repeat": 2,
+      "ms": 8.700000000004366,
+      "frames": 120
+    },
+    {
+      "map": "Crossroads",
+      "mode": "submit",
+      "version": "R2",
+      "repeat": 3,
+      "ms": 5.599999999998545,
+      "frames": 120
+    },
+    {
+      "map": "Crossroads",
+      "mode": "submit",
+      "version": "R3",
+      "repeat": 3,
+      "ms": 5.400000000001455,
+      "frames": 120
+    },
+    {
+      "map": "Crossroads",
+      "mode": "submit",
+      "version": "R0",
+      "repeat": 3,
+      "ms": 8.200000000004366,
+      "frames": 120
+    },
+    {
+      "map": "Crossroads",
+      "mode": "submit",
+      "version": "R1",
+      "repeat": 3,
+      "ms": 3.3000000000029104,
+      "frames": 120
+    },
+    {
+      "map": "Crossroads",
+      "mode": "submit",
+      "version": "R3",
+      "repeat": 4,
+      "ms": 5.900000000001455,
+      "frames": 120
+    },
+    {
+      "map": "Crossroads",
+      "mode": "submit",
+      "version": "R0",
+      "repeat": 4,
+      "ms": 8,
+      "frames": 120
+    },
+    {
+      "map": "Crossroads",
+      "mode": "submit",
+      "version": "R1",
+      "repeat": 4,
+      "ms": 5.900000000001455,
+      "frames": 120
+    },
+    {
+      "map": "Crossroads",
+      "mode": "submit",
+      "version": "R2",
+      "repeat": 4,
+      "ms": 7,
+      "frames": 120
+    },
+    {
+      "map": "Crossroads",
+      "mode": "submit",
+      "version": "R3",
+      "repeat": 5,
+      "ms": 8.89999999999418,
+      "frames": 120
+    },
+    {
+      "map": "Crossroads",
+      "mode": "submit",
+      "version": "R2",
+      "repeat": 5,
+      "ms": 10.80000000000291,
+      "frames": 120
+    },
+    {
+      "map": "Crossroads",
+      "mode": "submit",
+      "version": "R1",
+      "repeat": 5,
+      "ms": 3.8999999999941792,
+      "frames": 120
+    },
+    {
+      "map": "Crossroads",
+      "mode": "submit",
+      "version": "R0",
+      "repeat": 5,
+      "ms": 8,
+      "frames": 120
+    },
+    {
+      "map": "Crossroads",
+      "mode": "submit",
+      "version": "R2",
+      "repeat": 6,
+      "ms": 4.900000000001455,
+      "frames": 120
+    },
+    {
+      "map": "Crossroads",
+      "mode": "submit",
+      "version": "R1",
+      "repeat": 6,
+      "ms": 3.6999999999970896,
+      "frames": 120
+    },
+    {
+      "map": "Crossroads",
+      "mode": "submit",
+      "version": "R0",
+      "repeat": 6,
+      "ms": 7.69999999999709,
+      "frames": 120
+    },
+    {
+      "map": "Crossroads",
+      "mode": "submit",
+      "version": "R3",
+      "repeat": 6,
+      "ms": 4.599999999998545,
+      "frames": 120
+    },
+    {
+      "map": "Crossroads",
+      "mode": "submit",
+      "version": "R1",
+      "repeat": 7,
+      "ms": 3.3000000000029104,
+      "frames": 120
+    },
+    {
+      "map": "Crossroads",
+      "mode": "submit",
+      "version": "R0",
+      "repeat": 7,
+      "ms": 7.30000000000291,
+      "frames": 120
+    },
+    {
+      "map": "Crossroads",
+      "mode": "submit",
+      "version": "R3",
+      "repeat": 7,
+      "ms": 5.400000000001455,
+      "frames": 120
+    },
+    {
+      "map": "Crossroads",
+      "mode": "submit",
+      "version": "R2",
+      "repeat": 7,
+      "ms": 4.69999999999709,
+      "frames": 120
+    },
+    {
+      "map": "Crossroads",
+      "mode": "submit",
+      "version": "R0",
+      "repeat": 8,
+      "ms": 7.600000000005821,
+      "frames": 120
+    },
+    {
+      "map": "Crossroads",
+      "mode": "submit",
+      "version": "R3",
+      "repeat": 8,
+      "ms": 6,
+      "frames": 120
+    },
+    {
+      "map": "Crossroads",
+      "mode": "submit",
+      "version": "R2",
+      "repeat": 8,
+      "ms": 5,
+      "frames": 120
+    },
+    {
+      "map": "Crossroads",
+      "mode": "submit",
+      "version": "R1",
+      "repeat": 8,
+      "ms": 3.400000000001455,
+      "frames": 120
+    }
+  ],
+  "prep": [
+    {
+      "map": "Classic",
+      "repeat": 1,
+      "builds": 20,
+      "ms": 12
+    },
+    {
+      "map": "Classic",
+      "repeat": 2,
+      "builds": 20,
+      "ms": 11.39999999999418
+    },
+    {
+      "map": "Classic",
+      "repeat": 3,
+      "builds": 20,
+      "ms": 12.39999999999418
+    },
+    {
+      "map": "Classic",
+      "repeat": 4,
+      "builds": 20,
+      "ms": 16.900000000001455
+    },
+    {
+      "map": "Classic",
+      "repeat": 5,
+      "builds": 20,
+      "ms": 10.60000000000582
+    },
+    {
+      "map": "Classic",
+      "repeat": 6,
+      "builds": 20,
+      "ms": 11.099999999998545
+    },
+    {
+      "map": "Labyrinth",
+      "repeat": 1,
+      "builds": 20,
+      "ms": 11.80000000000291
+    },
+    {
+      "map": "Labyrinth",
+      "repeat": 2,
+      "builds": 20,
+      "ms": 11.299999999995634
+    },
+    {
+      "map": "Labyrinth",
+      "repeat": 3,
+      "builds": 20,
+      "ms": 13.19999999999709
+    },
+    {
+      "map": "Labyrinth",
+      "repeat": 4,
+      "builds": 20,
+      "ms": 10.80000000000291
+    },
+    {
+      "map": "Labyrinth",
+      "repeat": 5,
+      "builds": 20,
+      "ms": 11.900000000001455
+    },
+    {
+      "map": "Labyrinth",
+      "repeat": 6,
+      "builds": 20,
+      "ms": 11
+    },
+    {
+      "map": "Crossroads",
+      "repeat": 1,
+      "builds": 20,
+      "ms": 12
+    },
+    {
+      "map": "Crossroads",
+      "repeat": 2,
+      "builds": 20,
+      "ms": 12
+    },
+    {
+      "map": "Crossroads",
+      "repeat": 3,
+      "builds": 20,
+      "ms": 13.10000000000582
+    },
+    {
+      "map": "Crossroads",
+      "repeat": 4,
+      "builds": 20,
+      "ms": 11
+    },
+    {
+      "map": "Crossroads",
+      "repeat": 5,
+      "builds": 20,
+      "ms": 10.80000000000291
+    },
+    {
+      "map": "Crossroads",
+      "repeat": 6,
+      "builds": 20,
+      "ms": 11.400000000001455
+    }
+  ],
+  "counts": [],
+  "summary": [
+    {
+      "map": "Classic",
+      "mode": "submit",
+      "R0": {
+        "median_ms_per_frame": 0.05500000000001819,
+        "iqr": 0.0031249999999848344,
+        "min": 0.051666666666642415,
+        "max": 0.06666666666666667
+      },
+      "R1": {
+        "median_ms_per_frame": 0.029166666666666667,
+        "iqr": 0.004166666666681824,
+        "min": 0.02749999999996362,
+        "max": 0.10999999999997574
+      },
+      "R2": {
+        "median_ms_per_frame": 0.04291666666667879,
+        "iqr": 0.006874999999990902,
+        "min": 0.0375,
+        "max": 0.06916666666663028
+      },
+      "R3": {
+        "median_ms_per_frame": 0.04083333333334546,
+        "iqr": 0.010833333333296953,
+        "min": 0.036666666666678796,
+        "max": 0.05666666666663029
+      },
+      "reduction_pct": {
+        "R1": 46.969696969714505,
+        "R2": 21.969696969700735,
+        "R3": 25.757575757578255
+      }
+    },
+    {
+      "map": "Labyrinth",
+      "mode": "submit",
+      "R0": {
+        "median_ms_per_frame": 0.05208333333336365,
+        "iqr": 0.005833333333339394,
+        "min": 0.04833333333329695,
+        "max": 0.06416666666664242
+      },
+      "R1": {
+        "median_ms_per_frame": 0.03125,
+        "iqr": 0.004791666666672734,
+        "min": 0.026666666666642413,
+        "max": 0.25
+      },
+      "R2": {
+        "median_ms_per_frame": 0.04083333333334546,
+        "iqr": 0.01312499999994543,
+        "min": 0.03416666666665454,
+        "max": 0.057500000000012125
+      },
+      "R3": {
+        "median_ms_per_frame": 0.04125000000000606,
+        "iqr": 0.00895833333330908,
+        "min": 0.03250000000001212,
+        "max": 0.04916666666667879
+      },
+      "reduction_pct": {
+        "R1": 40.00000000003493,
+        "R2": 21.600000000022344,
+        "R3": 20.80000000003447
+      }
+    },
+    {
+      "map": "Crossroads",
+      "mode": "submit",
+      "R0": {
+        "median_ms_per_frame": 0.06666666666666667,
+        "iqr": 0.005416666666709105,
+        "min": 0.06083333333335759,
+        "max": 0.07750000000002426
+      },
+      "R1": {
+        "median_ms_per_frame": 0.03166666666663029,
+        "iqr": 0.006458333333299988,
+        "min": 0.02750000000002425,
+        "max": 0.04916666666667879
+      },
+      "R2": {
+        "median_ms_per_frame": 0.04874999999998787,
+        "iqr": 0.011875000000024248,
+        "min": 0.03916666666664241,
+        "max": 0.09000000000002426
+      },
+      "R3": {
+        "median_ms_per_frame": 0.048333333333357584,
+        "iqr": 0.006041666666654545,
+        "min": 0.03833333333332121,
+        "max": 0.07416666666661816
+      },
+      "reduction_pct": {
+        "R1": 52.50000000005457,
+        "R2": 26.87500000001819,
+        "R3": 27.49999999996362
+      }
+    }
+  ],
+  "complete": true,
+  "chromium": "143.0.7499.4",
+  "run_id": 45592835822,
+  "job_id": 139131352829
+}

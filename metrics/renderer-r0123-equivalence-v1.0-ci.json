@@ -1,0 +1,313 @@
+{
+  "mode": "equivalence",
+  "complete": true,
+  "results": [
+    {
+      "map": "Classic",
+      "version": "R1",
+      "frames": 120,
+      "maxDelta": 0,
+      "differentPixels": 0,
+      "statusDifferences": 0,
+      "fallback": true,
+      "wallShapes": 18
+    },
+    {
+      "map": "Classic",
+      "version": "R2",
+      "frames": 120,
+      "maxDelta": 6,
+      "differentPixels": 148106,
+      "statusDifferences": 0,
+      "fallback": false,
+      "wallShapes": 18
+    },
+    {
+      "map": "Classic",
+      "version": "R3",
+      "frames": 120,
+      "maxDelta": 6,
+      "differentPixels": 148106,
+      "statusDifferences": 0,
+      "fallback": false,
+      "wallShapes": 18
+    },
+    {
+      "map": "Labyrinth",
+      "version": "R1",
+      "frames": 120,
+      "maxDelta": 0,
+      "differentPixels": 0,
+      "statusDifferences": 0,
+      "fallback": true,
+      "wallShapes": 16
+    },
+    {
+      "map": "Labyrinth",
+      "version": "R2",
+      "frames": 120,
+      "maxDelta": 6,
+      "differentPixels": 141866,
+      "statusDifferences": 0,
+      "fallback": false,
+      "wallShapes": 16
+    },
+    {
+      "map": "Labyrinth",
+      "version": "R3",
+      "frames": 120,
+      "maxDelta": 6,
+      "differentPixels": 141866,
+      "statusDifferences": 0,
+      "fallback": false,
+      "wallShapes": 16
+    },
+    {
+      "map": "Crossroads",
+      "version": "R1",
+      "frames": 120,
+      "maxDelta": 0,
+      "differentPixels": 0,
+      "statusDifferences": 0,
+      "fallback": true,
+      "wallShapes": 24
+    },
+    {
+      "map": "Crossroads",
+      "version": "R2",
+      "frames": 120,
+      "maxDelta": 6,
+      "differentPixels": 159672,
+      "statusDifferences": 0,
+      "fallback": false,
+      "wallShapes": 24
+    },
+    {
+      "map": "Crossroads",
+      "version": "R3",
+      "frames": 120,
+      "maxDelta": 6,
+      "differentPixels": 159672,
+      "statusDifferences": 0,
+      "fallback": false,
+      "wallShapes": 24
+    }
+  ],
+  "samples": [],
+  "prep": [],
+  "counts": [
+    {
+      "map": "Classic",
+      "version": "R0",
+      "calls": {
+        "fillRect": 1,
+        "beginPath": 128,
+        "roundRect": 18,
+        "fill": 128,
+        "stroke": 18,
+        "arc": 110,
+        "moveTo": 2,
+        "closePath": 2,
+        "save": 1,
+        "translate": 1,
+        "lineTo": 8,
+        "restore": 1
+      },
+      "total": 418
+    },
+    {
+      "map": "Classic",
+      "version": "R1",
+      "calls": {
+        "drawImage": 1,
+        "beginPath": 110,
+        "arc": 110,
+        "fill": 110,
+        "moveTo": 2,
+        "closePath": 2,
+        "save": 1,
+        "translate": 1,
+        "lineTo": 8,
+        "restore": 1
+      },
+      "total": 346
+    },
+    {
+      "map": "Classic",
+      "version": "R2",
+      "calls": {
+        "drawImage": 1,
+        "beginPath": 11,
+        "moveTo": 102,
+        "arc": 110,
+        "fill": 11,
+        "closePath": 2,
+        "save": 1,
+        "translate": 1,
+        "lineTo": 8,
+        "restore": 1
+      },
+      "total": 248
+    },
+    {
+      "map": "Classic",
+      "version": "R3",
+      "calls": {
+        "drawImage": 1,
+        "beginPath": 11,
+        "moveTo": 102,
+        "arc": 110,
+        "fill": 11,
+        "closePath": 2,
+        "save": 1,
+        "translate": 1,
+        "lineTo": 8,
+        "restore": 1
+      },
+      "total": 248
+    },
+    {
+      "map": "Labyrinth",
+      "version": "R0",
+      "calls": {
+        "fillRect": 1,
+        "beginPath": 122,
+        "roundRect": 16,
+        "fill": 122,
+        "stroke": 16,
+        "arc": 106,
+        "moveTo": 2,
+        "closePath": 2,
+        "save": 1,
+        "translate": 1,
+        "lineTo": 8,
+        "restore": 1
+      },
+      "total": 398
+    },
+    {
+      "map": "Labyrinth",
+      "version": "R1",
+      "calls": {
+        "drawImage": 1,
+        "beginPath": 106,
+        "arc": 106,
+        "fill": 106,
+        "moveTo": 2,
+        "closePath": 2,
+        "save": 1,
+        "translate": 1,
+        "lineTo": 8,
+        "restore": 1
+      },
+      "total": 334
+    },
+    {
+      "map": "Labyrinth",
+      "version": "R2",
+      "calls": {
+        "drawImage": 1,
+        "beginPath": 11,
+        "moveTo": 98,
+        "arc": 106,
+        "fill": 11,
+        "closePath": 2,
+        "save": 1,
+        "translate": 1,
+        "lineTo": 8,
+        "restore": 1
+      },
+      "total": 240
+    },
+    {
+      "map": "Labyrinth",
+      "version": "R3",
+      "calls": {
+        "drawImage": 1,
+        "beginPath": 11,
+        "moveTo": 98,
+        "arc": 106,
+        "fill": 11,
+        "closePath": 2,
+        "save": 1,
+        "translate": 1,
+        "lineTo": 8,
+        "restore": 1
+      },
+      "total": 240
+    },
+    {
+      "map": "Crossroads",
+      "version": "R0",
+      "calls": {
+        "fillRect": 1,
+        "beginPath": 142,
+        "roundRect": 24,
+        "fill": 142,
+        "stroke": 24,
+        "arc": 118,
+        "moveTo": 2,
+        "closePath": 2,
+        "save": 1,
+        "translate": 1,
+        "lineTo": 8,
+        "restore": 1
+      },
+      "total": 466
+    },
+    {
+      "map": "Crossroads",
+      "version": "R1",
+      "calls": {
+        "drawImage": 1,
+        "beginPath": 118,
+        "arc": 118,
+        "fill": 118,
+        "moveTo": 2,
+        "closePath": 2,
+        "save": 1,
+        "translate": 1,
+        "lineTo": 8,
+        "restore": 1
+      },
+      "total": 370
+    },
+    {
+      "map": "Crossroads",
+      "version": "R2",
+      "calls": {
+        "drawImage": 1,
+        "beginPath": 11,
+        "moveTo": 110,
+        "arc": 118,
+        "fill": 11,
+        "closePath": 2,
+        "save": 1,
+        "translate": 1,
+        "lineTo": 8,
+        "restore": 1
+      },
+      "total": 264
+    },
+    {
+      "map": "Crossroads",
+      "version": "R3",
+      "calls": {
+        "drawImage": 1,
+        "beginPath": 11,
+        "moveTo": 110,
+        "arc": 118,
+        "fill": 11,
+        "closePath": 2,
+        "save": 1,
+        "translate": 1,
+        "lineTo": 8,
+        "restore": 1
+      },
+      "total": 264
+    }
+  ],
+  "summary": [],
+  "run_id": 45592835822,
+  "job_id": 139131352675
+}
