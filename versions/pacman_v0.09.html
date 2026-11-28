@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>JS Game PacMan v. 0.09</title>
+    <style>
+        body { padding: 1em; font-family: Arial, sans-serif; }
+        canvas { display: block; max-width: 100%; height: auto; background: #f4f4f4; border: 1px solid #333; }
+        button { padding: .5em 1em; }
+    </style>
+</head>
+<body>
+<h1 style="text-align:center">PACMAN v. 0.09</h1>
+<h2 id="idScore">Очки: 0</h2>
+<canvas id="canvas" width="680" height="360"></canvas>
+<p><button id="start">Start</button> <button id="stop" disabled>Stop</button></p>
+<p><label>Стратегия <select id="strategy"><option>Random</option><option>Greedy</option><option selected>BFS</option><option>A*</option></select></label> <label>Seed <input id="seed" type="number" value="42" step="1"></label></p>
+<p id="status" role="status">Нажмите Start. Управление — стрелками.</p>
+<script>
+"use strict";
+
+// Immutable configuration shared by the independent game components.
+const CONFIG = Object.freeze({
+    cellSize: 40,
+    speed: 2,
+    tick: 1000 / 60,
+    actorRadius: 16,
+    pelletRadius: 2,
+    map: Object.freeze([
+        "G................",
+        ".#.#####.#####.#.",
+        ".#.............#.",
+        "...#.#.###.#.#...",
+        "##...#..P..#...##",
+        "...#.#.###.#.#...",
+        ".#.............#.",
+        ".#.#####.#####.#.",
+        "................."
+    ])
+});
+const DIRECTIONS = Object.freeze([
+    { x: 1, y: 0 }, { x: 0, y: 1 }, { x: -1, y: 0 }, { x: 0, y: -1 }
+].map(Object.freeze));
+const IDLE = Object.freeze({ x: 0, y: 0 });
+const KEY_DIRECTIONS = Object.freeze({
+    ArrowRight: DIRECTIONS[0], ArrowDown: DIRECTIONS[1],
+    ArrowLeft: DIRECTIONS[2], ArrowUp: DIRECTIONS[3]
+});
+
+class Maze {
+    constructor(map, cellSize) {
+        this.map = map;
+        this.cellSize = cellSize;
+        this.rows = map.length;
+        this.cols = map[0].length;
+        this.walls = [];
+        this.starts = {};
+        this.pelletCells = [];
+        for (let row = 0; row < this.rows; row++) {
+            for (let col = 0; col < this.cols; col++) {
+                this.readTile(row, col);
+            }
+        }
+    }
+
+    readTile(row, col) {
+        const tile = this.map[row][col];
+        if (tile === '#') {
+            this.walls.push({ row, col });
+            return;
+        }
+        if (tile === 'P' || tile === 'G') {
+            this.starts[tile] = this.center(row, col);
+        }
+        if (tile !== 'P') this.pelletCells.push({ row, col });
+    }
+
+    center(row, col) {
+        return {
+            x: (col + 0.5) * this.cellSize,
+            y: (row + 0.5) * this.cellSize
+        };
+    }
+
+    cellAt(x, y) {
+        return {
+            row: Math.floor(y / this.cellSize),
+            col: Math.floor(x / this.cellSize)
+        };
+    }
+
+    isWalkable(row, col) {
+        return row >= 0 && row < this.rows && col >= 0 &&
+            col < this.cols && this.map[row][col] !== '#';
+    }
+
+    key(row, col) {
+        return row * this.cols + col;
+    }
+}
+
+class Actor {
+    constructor(maze, position, color) {
+        this.maze = maze;
+        this.x = position.x;
+        this.y = position.y;
+        this.color = color;
+        this.radius = CONFIG.actorRadius;
+        this.direction = IDLE;
+    }
+
+    atCenter() {
+        const size = this.maze.cellSize;
+        return (this.x - size / 2) % size === 0 &&
+            (this.y - size / 2) % size === 0;
+    }
+
+    canMove(direction) {
+        const { row, col } = this.maze.cellAt(
+            this.x + direction.x * CONFIG.speed,
+            this.y + direction.y * CONFIG.speed
+        );
+        return this.maze.isWalkable(row, col);
+    }
+
+    canEnter(direction) {
+        if (direction === IDLE) return false;
+        const { row, col } = this.maze.cellAt(this.x, this.y);
+        return this.maze.isWalkable(row + direction.y, col + direction.x);
+    }
+
+    advance() {
+        if (this.atCenter() && !this.canEnter(this.direction)) return;
+        if (!this.canMove(this.direction)) return;
+        this.x += this.direction.x * CONFIG.speed;
+        this.y += this.direction.y * CONFIG.speed;
+    }
+
+    isReverse(direction) {
+        return direction.x === -this.direction.x && direction.y === -this.direction.y;
+    }
+}
+
+class Player extends Actor {
+    constructor(maze) {
+        super(maze, maze.starts.P, 'blue');
+        this.requested = IDLE;
+    }
+
+    update() {
+        const centered = this.atCenter();
+        const requested = this.requested;
+        if (requested !== IDLE && (centered || this.isReverse(requested)) &&
+            (centered ? this.canEnter(requested) : this.canMove(requested))) {
+            this.direction = requested;
+        }
+        this.advance();
+    }
+}
+
+class GreedyGhostAI {
+    chooseDirection(ghost, player) {
+        let options = DIRECTIONS.filter(direction => ghost.canEnter(direction));
+        const forward = options.filter(direction => !ghost.isReverse(direction));
+        if (forward.length) options = forward;
+        const size = ghost.maze.cellSize;
+        const distance = direction => Math.abs(player.x - ghost.x - size * direction.x) +
+            Math.abs(player.y - ghost.y - size * direction.y);
+        options.sort((a, b) => distance(a) - distance(b));
+        return options[0] || IDLE;
+    }
+}
+
+
+class RandomGhostAI {
+    constructor(seed = 42) {
+        this.state = seed >>> 0;
+    }
+
+    chooseDirection(ghost) {
+        let options = DIRECTIONS.filter(d => ghost.canEnter(d));
+        const forward = options.filter(d => !ghost.isReverse(d));
+        if (forward.length) options = forward;
+        this.state = (Math.imul(1664525, this.state) + 1013904223) >>> 0;
+        return options[Math.floor(this.state / 4294967296 * options.length)] || IDLE;
+    }
+}
+
+class PathSearch {
+    // Unit-cost graph; deterministic direction order; A* uses Manhattan heuristic.
+    static find(maze, start, target, heuristic = false) {
+        const key = p => maze.key(p.row, p.col);
+        const h = p => heuristic ? Math.abs(p.row - target.row) + Math.abs(p.col - target.col) : 0;
+        if (!maze.isWalkable(start.row, start.col) || !maze.isWalkable(target.row, target.col)) {
+            return { path: null, expanded: 0 };
+        }
+        const open = [{ ...start, g: 0, f: h(start), order: 0 }];
+        const best = new Map([[key(start), 0]]);
+        const parents = new Map();
+        let expanded = 0;
+        let order = 1;
+        while (open.length) {
+            if (heuristic) open.sort((a, b) => a.f - b.f || a.order - b.order);
+            const current = open.shift();
+            if (current.g !== best.get(key(current))) continue;
+            expanded++;
+            if (key(current) === key(target)) {
+                const path = [];
+                let k = key(current);
+                while (parents.has(k)) {
+                    const parent = parents.get(k);
+                    path.push(parent.direction);
+                    k = parent.key;
+                }
+                return { path: path.reverse(), expanded };
+            }
+            for (const direction of DIRECTIONS) {
+                const next = { row: current.row + direction.y, col: current.col + direction.x };
+                if (!maze.isWalkable(next.row, next.col)) continue;
+                const k = key(next);
+                const g = current.g + 1;
+                if (best.has(k) && best.get(k) <= g) continue;
+                best.set(k, g);
+                parents.set(k, { key: key(current), direction });
+                open.push({ ...next, g, f: g + h(next), order: order++ });
+            }
+        }
+        return { path: null, expanded };
+    }
+}
+
+class BFSGhostAI {
+    chooseDirection(ghost, player) {
+        const maze = ghost.maze;
+        const result = PathSearch.find(maze, maze.cellAt(ghost.x, ghost.y), maze.cellAt(player.x, player.y));
+        return result.path?.[0] || IDLE;
+    }
+}
+
+class AStarGhostAI {
+    chooseDirection(ghost, player) {
+        const maze = ghost.maze;
+        const result = PathSearch.find(maze, maze.cellAt(ghost.x, ghost.y), maze.cellAt(player.x, player.y), true);
+        return result.path?.[0] || IDLE;
+    }
+}
+
+function createGhostAI(strategy, seed) {
+    switch (strategy) {
+        case 'Random': return new RandomGhostAI(seed);
+        case 'Greedy': return new GreedyGhostAI();
+        case 'BFS': return new BFSGhostAI();
+        case 'A*': return new AStarGhostAI();
+        default: throw new Error('Unknown strategy');
+    }
+}
+
+class Ghost extends Actor {
+    constructor(maze, ai) {
+        super(maze, maze.starts.G, 'Red');
+        this.ai = ai;
+    }
+
+    update(player) {
+        if (this.atCenter()) this.direction = this.ai.chooseDirection(this, player);
+        this.advance();
+    }
+}
+
+class Pellet {
+    constructor(position) {
+        this.x = position.x;
+        this.y = position.y;
+        this.radius = CONFIG.pelletRadius;
+        this.color = 'Gray';
+    }
+
+    touches(player) {
+        return Math.hypot(player.x - this.x, player.y - this.y) <=
+            player.radius + this.radius;
+    }
+}
+
+class PelletStore {
+    constructor(maze) {
+        this.maze = maze;
+        this.remaining = new Map();
+        for (const { row, col } of maze.pelletCells) {
+            this.remaining.set(maze.key(row, col), new Pellet(maze.center(row, col)));
+        }
+    }
+
+    collect(player) {
+        // The sum of radii (18) is strictly less than half a cell (20).
+        // A pellet in another cell therefore cannot touch the player.
+        const { row, col } = this.maze.cellAt(player.x, player.y);
+        const key = this.maze.key(row, col);
+        const pellet = this.remaining.get(key);
+        if (!pellet || !pellet.touches(player)) return false;
+        this.remaining.delete(key);
+        return true;
+    }
+}
+
+class Renderer {
+    constructor(canvas, scoreElement, maze) {
+        this.canvas = canvas;
+        this.context = canvas.getContext('2d');
+        this.scoreElement = scoreElement;
+        this.maze = maze;
+        canvas.width = maze.cols * maze.cellSize;
+        canvas.height = maze.rows * maze.cellSize;
+    }
+
+    drawCircle(entity) {
+        const ctx = this.context;
+        ctx.beginPath();
+        ctx.arc(entity.x, entity.y, entity.radius, 0, 2 * Math.PI);
+        ctx.fillStyle = entity.color;
+        ctx.fill();
+    }
+
+    render(player, ghost, pellets, score) {
+        const ctx = this.context;
+        const size = this.maze.cellSize;
+        ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        ctx.fillStyle = 'Cyan';
+        for (const { row, col } of this.maze.walls) {
+            ctx.fillRect(col * size, row * size, size, size);
+        }
+        for (const pellet of pellets.remaining.values()) this.drawCircle(pellet);
+        this.drawCircle(player);
+        this.drawCircle(ghost);
+        this.scoreElement.textContent = `Очки: ${score}`;
+    }
+}
+
+class Game {
+    constructor({ canvas, score, start, stop, status }) {
+        this.controls = { start, stop, status };
+        this.maze = new Maze(CONFIG.map, CONFIG.cellSize);
+        this.renderer = new Renderer(canvas, score, this.maze);
+        this.strategy = document.getElementById('strategy');
+        this.seed = document.getElementById('seed');
+        this.running = false;
+        this.frameId = null;
+        this.lastTime = null;
+        this.accumulator = 0;
+        this.reset();
+        start.addEventListener('click', () => this.start());
+        stop.addEventListener('click', () => this.stop());
+        document.addEventListener('keydown', event => this.handleKey(event));
+    }
+
+    reset() {
+        this.player = new Player(this.maze);
+        this.ai = createGhostAI(this.strategy.value, Number(this.seed.value));
+        this.ghost = new Ghost(this.maze, this.ai);
+        this.pellets = new PelletStore(this.maze);
+        this.score = 0;
+        this.render();
+    }
+
+    handleKey(event) {
+        if (!Object.hasOwn(KEY_DIRECTIONS, event.key)) return;
+        event.preventDefault();
+        if (this.running) this.player.requested = KEY_DIRECTIONS[event.key];
+    }
+
+    update() {
+        this.player.update();
+        if (this.pellets.collect(this.player)) this.score++;
+        this.ghost.update(this.player);
+    }
+
+    render() {
+        this.renderer.render(this.player, this.ghost, this.pellets, this.score);
+    }
+
+    schedule() {
+        this.frameId = requestAnimationFrame(time => this.loop(time));
+    }
+
+    loop(time) {
+        if (!this.running) return;
+        if (this.lastTime === null) this.lastTime = time;
+        this.accumulator += Math.min(time - this.lastTime, 100);
+        this.lastTime = time;
+        while (this.accumulator >= CONFIG.tick) {
+            this.update();
+            this.accumulator -= CONFIG.tick;
+        }
+        this.render();
+        this.schedule();
+    }
+
+    start() {
+        if (this.running) return;
+        this.reset();
+        this.running = true;
+        this.lastTime = null;
+        this.accumulator = 0;
+        this.strategy.disabled = true;
+        this.seed.disabled = true;
+        this.controls.start.disabled = true;
+        this.controls.stop.disabled = false;
+        this.controls.status.textContent = 'Игра запущена. Управление — стрелками.';
+        this.schedule();
+    }
+
+    stop() {
+        this.running = false;
+        if (this.frameId !== null) cancelAnimationFrame(this.frameId);
+        this.frameId = null;
+        this.strategy.disabled = false;
+        this.seed.disabled = false;
+        this.controls.start.disabled = false;
+        this.controls.stop.disabled = true;
+        this.controls.status.textContent = 'Игра остановлена. Start начнёт новую игру.';
+    }
+}
+
+const game = new Game({
+    canvas: document.getElementById('canvas'),
+    score: document.getElementById('idScore'),
+    start: document.getElementById('start'),
+    stop: document.getElementById('stop'),
+    status: document.getElementById('status')
+});
+</script>
+</body>
+</html>

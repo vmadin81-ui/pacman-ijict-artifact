@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>JS Game PacMan v. 0.07</title>
+    <style>
+        body { padding: 1em; font-family: Arial, sans-serif; }
+        canvas { display: block; max-width: 100%; height: auto; background: #f4f4f4; border: 1px solid #333; }
+        button { padding: .5em 1em; }
+    </style>
+</head>
+<body>
+<h1 style="text-align:center">PACMAN v. 0.07</h1>
+<h2 id="idScore">Очки: 0</h2>
+<canvas id="canvas" width="680" height="360"></canvas>
+<p><button id="start">Start</button> <button id="stop" disabled>Stop</button></p>
+<p id="status" role="status">Нажмите Start. Управление — стрелками.</p>
+<script>
+"use strict";
+const canvas = document.getElementById("canvas");
+const context2D = canvas.getContext("2d");
+const result = document.getElementById("idScore");
+const startBtn = document.getElementById("start");
+const stopBtn = document.getElementById("stop");
+const statusText = document.getElementById("status");
+const cell = 40;
+const speed = 2;
+const tick = 1000 / 60;
+const directions = [ {x:1,y:0}, {x:0,y:1}, {x:-1,y:0}, {x:0,y:-1} ];
+const idle = {x:0,y:0};
+let circle_1, circle_2, rect_arr = [], cir_arr = [];
+let finalScore = 0, running = false, frameId = null;
+let lastTime = null, accumulator = 0;
+let requested = idle;
+
+class Circle {
+    constructor(ctx, x, y, radius = 16, color = 'blue') {
+        Object.assign(this, {ctx, x, y, radius, color});
+        this.direction = idle;
+        this.collected = false;
+    }
+    render() {
+        if (this.collected) return;
+        this.ctx.beginPath();
+        this.ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
+        this.ctx.fillStyle = this.color;
+        this.ctx.fill();
+    }
+    // Проверка фактического пересечения круга и прямоугольника.
+    collision(rect, x = this.x, y = this.y) {
+        const nearX = Math.max(rect.x, Math.min(x, rect.x + rect.w));
+        const nearY = Math.max(rect.y, Math.min(y, rect.y + rect.h));
+        return (x-nearX)**2 + (y-nearY)**2 < this.radius**2;
+    }
+    canMove(direction) {
+        const x = this.x + direction.x * speed;
+        const y = this.y + direction.y * speed;
+        return x >= this.radius && x <= canvas.width-this.radius &&
+               y >= this.radius && y <= canvas.height-this.radius &&
+               !rect_arr.some(rect => this.collision(rect, x, y));
+    }
+    atCenter() {
+        return (this.x-cell/2)%cell === 0 && (this.y-cell/2)%cell === 0;
+    }
+    move() {
+        if (!this.canMove(this.direction)) return;
+        this.x += this.direction.x * speed;
+        this.y += this.direction.y * speed;
+    }
+    score(dot) {
+        if (dot.collected) return false;
+        if (Math.hypot(this.x-dot.x, this.y-dot.y) <= this.radius+dot.radius) {
+            dot.collected = true;
+            return true;
+        }
+        return false;
+    }
+}
+class Rect {
+    constructor(ctx, x, y, w, h, color = 'Cyan') {
+        Object.assign(this, {ctx,x,y,w,h,color});
+    }
+    render() {
+        this.ctx.fillStyle = this.color;
+        this.ctx.fillRect(this.x,this.y,this.w,this.h);
+    }
+}
+function initGame() {
+    circle_1 = new Circle(context2D, 340, 180);
+    circle_2 = new Circle(context2D, 20, 20, 16, 'Red');
+    // Исходные 18 препятствий версии 0.06.
+    rect_arr = [
+        new Rect(context2D, 40, 40, 40, 80),
+        new Rect(context2D, 120, 40, 200, 40),
+        new Rect(context2D, 120, 120, 40, 40),
+        new Rect(context2D, 120, 200, 40, 40),
+        new Rect(context2D, 200, 120, 40, 120),
+        new Rect(context2D, 120, 280, 200, 40),
+        new Rect(context2D, 40, 240, 40, 80),
+        new Rect(context2D, 280, 120, 120, 40),
+        new Rect(context2D, 280, 200, 120, 40),
+        new Rect(context2D, 360, 40, 200, 40),
+        new Rect(context2D, 360, 280, 200, 40),
+        new Rect(context2D, 520, 120, 40, 40),
+        new Rect(context2D, 520, 200, 40, 40),
+        new Rect(context2D, 440, 120, 40, 120),
+        new Rect(context2D, 600, 40, 40, 80),
+        new Rect(context2D, 600, 240, 40, 80),
+        new Rect(context2D, 2, 160, 80, 40),
+        new Rect(context2D, 600, 160, 78, 40)
+    ];
+    cir_arr = [];
+    for (let i=0; i<canvas.width/cell; i++) {
+        for (let j=0; j<canvas.height/cell; j++) {
+            const x=cell/2+i*cell, y=cell/2+j*cell;
+            // Точки только там, где помещается персонаж.
+            if (!rect_arr.some(r => circle_1.collision(r,x,y))) {
+                cir_arr.push(new Circle(context2D,x,y,2,'Gray'));
+            }
+        }
+    }
+    // Стартовая точка не считается заработанным очком.
+    const initial = cir_arr.find(d => d.x===circle_1.x && d.y===circle_1.y);
+    if (initial) initial.collected = true;
+    requested = idle;
+    finalScore = 0;
+    renderAll();
+}
+// Повороты только в центре клетки; разворот возможен в коридоре.
+function movePlayer() {
+    const d = circle_1.direction;
+    if (requested !== idle && (circle_1.atCenter() ||
+        (requested.x===-d.x && requested.y===-d.y)) &&
+        (circle_1.atCenter() ? canEnterNextCell(circle_1,requested) : circle_1.canMove(requested))) {
+        circle_1.direction = requested;
+    }
+    moveAlongCorridor(circle_1);
+}
+// Останавливаемся в центре перед стеной или краем, не у самого края.
+function canEnterNextCell(actor, direction) {
+    if (direction === idle) return false;
+    const x = actor.x + cell*direction.x, y = actor.y + cell*direction.y;
+    if (x < cell/2 || x > canvas.width-cell/2 || y < cell/2 || y > canvas.height-cell/2) return false;
+    // Проверяем весь отрезок, а не только конечную клетку.
+    for (let s=speed; s<=cell; s+=speed) {
+        if (rect_arr.some(r => actor.collision(r,actor.x+s*direction.x,actor.y+s*direction.y))) return false;
+    }
+    return true;
+}
+function moveAlongCorridor(actor) {
+    if (actor.atCenter() && !canEnterNextCell(actor,actor.direction)) return;
+    actor.move();
+}
+// Пока только локальный жадный выбор, без BFS (версия 0.09).
+function moveEnemy() {
+    if (circle_2.atCenter()) {
+        let options = directions.filter(d => canEnterNextCell(circle_2,d));
+        const current = circle_2.direction;
+        const forward = options.filter(d => !(d.x===-current.x && d.y===-current.y));
+        if (forward.length) options = forward;
+        const distance = d => Math.abs(circle_1.x-circle_2.x-cell*d.x) +
+                              Math.abs(circle_1.y-circle_2.y-cell*d.y);
+        options.sort((a,b) => distance(a)-distance(b));
+        circle_2.direction = options[0] || idle;
+    }
+    moveAlongCorridor(circle_2);
+}
+function playTheGame() {
+    movePlayer();
+    for (const dot of cir_arr) if (circle_1.score(dot)) finalScore++;
+    moveEnemy();
+}
+function renderAll() {
+    context2D.clearRect(0,0,canvas.width,canvas.height);
+    rect_arr.forEach(r => r.render());
+    cir_arr.forEach(d => d.render());
+    circle_1.render();
+    circle_2.render();
+    result.textContent = `Очки: ${finalScore}`;
+}
+function gameLoop(time) {
+    if (!running) return;
+    if (lastTime === null) lastTime = time;
+    accumulator += Math.min(time-lastTime, 100);
+    lastTime = time;
+    while (accumulator >= tick) {
+        playTheGame();
+        accumulator -= tick;
+    }
+    renderAll();
+    frameId = requestAnimationFrame(gameLoop);
+}
+function start() {
+    if (running) return;
+    initGame();
+    running = true;
+    lastTime = null;
+    accumulator = 0;
+    startBtn.disabled = true;
+    stopBtn.disabled = false;
+    statusText.textContent = 'Игра запущена. Управление — стрелками.';
+    frameId = requestAnimationFrame(gameLoop);
+}
+function stopEvent() {
+    running = false;
+    if (frameId !== null) cancelAnimationFrame(frameId);
+    frameId = null;
+    startBtn.disabled = false;
+    stopBtn.disabled = true;
+    statusText.textContent = 'Игра остановлена. Start начнёт новую игру.';
+}
+const keyDirections = {ArrowRight:directions[0], ArrowDown:directions[1],
+                       ArrowLeft:directions[2], ArrowUp:directions[3]};
+document.addEventListener('keydown', event => {
+    if (keyDirections[event.key]) {
+        event.preventDefault();
+        if (running) requested = keyDirections[event.key];
+    }
+});
+startBtn.addEventListener('click',start);
+stopBtn.addEventListener('click',stopEvent);
+initGame();
+</script>
+</body>
+</html>

@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JS Game PacMan</title>
+
+</head>
+
+<body style="padding:1em">
+
+<h1 style="text-align: center">PACMAN v. 0.06 </h1>
+<h2 id="idScore"></h2>
+
+<canvas id="canvas" width="680" height="360"
+        style="margin-top:1em; background-color:#f4f4f4";>
+</canvas>
+
+<p></p>
+<button id="start" onClick="start()">Start</button>
+<button id="stop" onClick="stopEvent()">Stop</button>
+
+
+<script>
+    "use strict";
+    // variables which are known in the complete file
+    let speedX = 0;
+    let speedY = 0;
+
+    const speed = 2;
+
+    let circle_1;
+    let circle_2;
+
+    let GlCol = false;
+    let GrCol = false;
+    let GtCol = false;
+    let GbCol = false;
+
+    let GlCol2 = false;
+    let GrCol2 = false;
+    let GtCol2 = false;
+    let GbCol2 = false;
+
+    let finalScore = 0;
+    const result = document.getElementById("idScore");
+
+    let stop = false;
+    let rect_arr = new Array();
+
+    let boll_arr = new Array();
+
+    let cir_arr = new Array(18);
+    for (let i=0; i < 18; i++) {
+        cir_arr[i] = new Array(9);
+    }
+
+    // use class-syntax for 'Circle'
+    class Circle {
+        constructor(ctx, x = canvas.width / 2, y = canvas.height / 2, radius = 16, color = 'blue') {
+            this.ctx = ctx;
+            this.x = x;
+            this.y = y;
+            this.radius = radius;
+            this.color = color;
+        }
+
+        // function to render the circle
+        render() {
+            this.ctx.beginPath(); // restart colors and lines
+            this.ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI, false);
+            this.ctx.fillStyle = this.color;
+            this.ctx.fill();
+        }
+
+        score(dot){
+            let rpC = this.x + this.radius;
+            let tpC = this.y - this.radius;
+            let lpC = this.x - this.radius;
+            let bpC = this.y + this.radius;
+
+            let isScore = (rpC > dot.x && lpC < dot.x) && (tpC < dot.y && bpC > dot.y)
+            if (isScore === true) {
+                dot.color = '#f4f4f4';
+            }
+        }
+
+        collision(rect) {
+            let rpC = this.x + this.radius + 2;
+            let tpC = this.y - this.radius - 2;
+            let lpC = this.x - this.radius - 2;
+            let bpC = this.y + this.radius + 2;
+
+            let lpR = rect.x;
+            let rpR = rect.x + rect.w;
+            let tpR = rect.y;
+            let bpR = rect.y + rect.h;
+
+            let lCol = (lpC <= rpR && rpC > rpR) && (bpC > tpR && tpC < bpR);
+            let rCol = (rpC >= lpR && lpC < lpR) && (bpC > tpR && tpC < bpR);
+            let bCol = (bpC >= tpR && tpC < tpR) && (rpC > lpR && lpC < rpR);
+            let tCol = (tpC <= bpR && bpC > bpR) && (rpC > lpR && lpC < rpR);
+
+            if (GlCol === false && lCol === true) GlCol=true;
+            if (GrCol === false && rCol === true) GrCol=true;
+            if (GtCol === false && tCol === true) GtCol=true;
+            if (GbCol === false && bCol === true) GbCol=true;
+
+            if (GlCol2 === false && lCol === true) GlCol2=true;
+            if (GrCol2 === false && rCol === true) GrCol2=true;
+            if (GtCol2 === false && tCol === true) GtCol2=true;
+            if (GbCol2 === false && bCol === true) GbCol2=true;
+
+        }
+
+        // two functions to change the position (positive or negative values)
+        moveX(step) {
+            this.x += step;
+        }
+
+        moveY(step) {
+            this.y += step;
+        }
+    }
+
+    class Rect {
+        constructor(ctx, x, y, w, h, color = 'Cyan') {
+            this.ctx = ctx;
+            this.x = x;
+            this.y = y;
+            this.h = h;
+            this.w = w;
+            this.color = color;
+        }
+
+        render() {
+            this.ctx.fillStyle = this.color;
+            this.ctx.fillRect(this.x, this.y, this.w, this.h);
+
+        }
+    }
+
+    // inititalize all objects, variables, .. of the game
+    function start() {
+
+        // provide canvas and context
+        const canvas = document.getElementById("canvas");
+        const context2D = canvas.getContext("2d");
+
+        speedX = 0;
+        speedY = 0;
+
+        // create a circle at a certain position
+        circle_1 = new Circle(context2D);
+
+        circle_2 = new Circle(context2D, 20, 20, 16, 'Red')
+
+        for (let i = 0; i < 18; i++){
+            for (let j = 0; j < 9; j++){
+                let x = 20+i*40;
+                let y = 20+j*40;
+                cir_arr[i][j] = new Circle(context2D, x, y, 2, 'Gray');
+            }
+        }
+
+        rect_arr[0] = new Rect(context2D, 40, 40, 40, 80);
+        rect_arr[1] = new Rect(context2D, 120, 40, 200, 40);
+        rect_arr[2] = new Rect(context2D, 120, 120, 40, 40);
+        rect_arr[3] = new Rect(context2D, 120, 200, 40, 40);
+        rect_arr[4] = new Rect(context2D, 200, 120, 40, 120);
+        rect_arr[5] = new Rect(context2D, 120, 280, 200, 40);
+        rect_arr[6] = new Rect(context2D, 40, 240, 40, 80);
+        rect_arr[7] = new Rect(context2D, 280, 120, 120, 40);
+        rect_arr[8] = new Rect(context2D, 280, 200, 120, 40);
+        rect_arr[9] = new Rect(context2D, 360, 40, 200, 40);
+        rect_arr[10] = new Rect(context2D, 360, 280, 200, 40);
+        rect_arr[11] = new Rect(context2D, 520, 120, 40, 40);
+        rect_arr[12] = new Rect(context2D, 520, 200, 40, 40);
+        rect_arr[13] = new Rect(context2D, 440, 120, 40, 120);
+        rect_arr[14] = new Rect(context2D, 600, 40, 40, 80);
+        rect_arr[15] = new Rect(context2D, 600, 240, 40, 80);
+        rect_arr[16] = new Rect(context2D, 2, 160, 80, 40);
+        rect_arr[17] = new Rect(context2D, 600, 160, 78, 40);
+
+        // start the game
+        stop = false;
+        playTheGame(canvas, context2D);
+
+        const startBtn = document.getElementById("start");
+        startBtn.disable = true;
+        const stopBtn = document.getElementById("stop");
+        stopBtn.disable = false;
+    }
+
+    function correctY(myCircle) {
+        let i = Math.round((myCircle.y + 20) / 40) * 40 - 20;
+        circle_1.y = i;
+    }
+
+    function correctX(myCircle) {
+        let i = Math.round((myCircle.x + 20) / 40) * 40 - 20;
+        circle_1.x = i;
+    }
+
+    // the game's logic
+    function playTheGame(canvas, context2D) {
+
+        document.onkeydown = function (event) {
+            //event = event || window.event;
+            if ((event.key === 'ArrowRight')) {
+                speedY = 0;
+                speedX = speed;
+            }
+            if (event.key === 'ArrowLeft') {
+                speedY = 0;
+                speedX = -speed;
+            }
+            if (event.key === 'ArrowUp') {
+                speedY = -speed;
+                speedX = 0;
+            }
+            if (event.key === 'ArrowDown') {
+                speedY = speed;
+                speedX = 0;
+            }
+        }
+
+        GlCol = false;
+        GrCol = false;
+        GtCol = false;
+        GbCol = false;
+
+        //let coll = circle_1.collision();
+        for (let i = 0; i < 18; i++){
+            circle_1.collision(rect_arr[i]);
+        }
+
+        for (let i = 0; i < 18; i++){
+            for (let j = 0; j < 9; j++){
+                circle_1.score(cir_arr[i][j]);
+            }
+        }
+
+        finalScore = -1;
+        for (let i = 0; i < 18; i++){
+            for (let j = 0; j < 9; j++){
+                if (cir_arr[i][j].color === '#f4f4f4') {finalScore++;}
+            }
+        }
+
+        if ((speedX > 0 && (circle_1.x < canvas.width - 21) && GrCol === false) || (speedX < 0 && (circle_1.x > 21) && GlCol === false)) {
+            correctY(circle_1);
+            circle_1.moveX(speedX);
+        }
+
+        if ((speedY > 0 && (circle_1.y < canvas.height - 21) && GbCol === false) || (speedY < 0 && (circle_1.y > 21) && GtCol === false)) {
+            correctX(circle_1);
+            circle_1.moveY(speedY);
+        }
+
+        //Движение противника
+
+            GlCol2 = false;
+            GrCol2 = false;
+            GtCol2 = false;
+            GbCol2 = false;
+
+            for (let i = 0; i < 18; i++){
+                circle_2.collision(rect_arr[i]);
+            }
+
+            boll_arr = [0, 0, 0, 0];
+
+            if ((circle_2.x < canvas.width - 21) && (GrCol2 === false)) {
+                //значит можно двигаться вправо
+                boll_arr[0] = circle_1.x - circle_2.x;
+            }
+
+            if ((circle_2.x > 21) && (GlCol2 === false)) {
+                //значит можно двигаться влево
+                boll_arr[1] = circle_2.x - circle_1.x;
+            }
+
+            if ((circle_2.y < canvas.height - 21) && (GbCol2 === false)) {
+                //значит можно двигаться вниз
+                boll_arr[2] = circle_1.y - circle_2.y;
+            }
+
+            if ((circle_2.y > 21) && (GtCol2 === false)) {
+                //значит можно двигаться вверх
+                boll_arr[3] = circle_2.y - circle_1.y;
+            }
+
+        console.log(boll_arr);
+
+            let max = boll_arr[0];
+            let keyElem = 0;
+
+            for (const [key, val] of Object.entries(boll_arr)) {
+                //alert(key + ' / ' + val); // 'four / cuatro' is included
+                if (val > max) {max = val; keyElem = key;}
+            }
+
+        console.log(keyElem);
+
+            switch(keyElem) {
+                case '0':
+                    circle_2.moveX(speed);
+                    console.log('вправо');
+                    break;
+                case '1':
+                    circle_2.moveX(-speed);
+                    console.log('влево');
+                    break;
+                case '2':
+                    circle_2.moveY(speed);
+                    console.log('вниз');
+                    break;
+                case '3':
+                    circle_2.moveY(-speed);
+                    console.log('вверх');
+                    break;
+                default:
+                    break;
+                }
+
+
+
+        //Конец блока Движение противника
+
+        result.innerHTML = "Очки: " + finalScore;
+        // show the result
+        renderAll(canvas, context2D);
+    }
+
+    // rendering consists off:
+    //   - clear the complete screen
+    //   - re-paint the complete screen
+    //   - call the game's logic again via requestAnimationFrame()
+    function renderAll(canvas, context2D) {
+
+        // remove every old drawing from the canvas (before re-rendering)
+        context2D.clearRect(0, 0, canvas.width, canvas.height);
+
+        // drawn the sceen
+        context2D.beginPath();
+        context2D.moveTo(1, 1);  // no drawing
+        context2D.lineTo(679, 1);
+        context2D.lineTo(679, 359);
+        context2D.lineTo(1, 359);
+        context2D.lineTo(1, 1);
+        context2D.stroke();
+        context2D.lineWidth = 1;
+
+        for (let i = 0; i < 18; i++){
+            for (let j = 0; j < 9; j++){
+                cir_arr[i][j].render();
+            }
+        }
+
+        circle_1.render();
+        circle_2.render();
+
+        for (let i = 0; i < 18; i++){
+            rect_arr[i].render();
+        }
+        // re-start the game's logic, which lastly leads to
+        // a rendering of the canvas
+        if (!stop) {
+            window.requestAnimationFrame(() => playTheGame(canvas, context2D));
+        }
+    }
+
+    // terminate the rendering by setting a boolean flag
+    function stopEvent() {
+        stop = true;
+    }
+</script>
+
+
+</body>
+</html>
